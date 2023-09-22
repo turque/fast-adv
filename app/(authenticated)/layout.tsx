@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 
+import Header from './components/header'
+
 import '../globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -18,29 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className='bg-slate-300'>
-          <div className="flex flex-row bg-green-100">
-            <div className="basic-1/2 bg-green-400 object-left">
-              <Image
-                  src="/api/img/compass.png"
-                  width={32}
-                  height={32  }
-                  alt="Picture of the author"
-                />
-            <div className="basic-1/2 bg-blue-300">
-              <div>
-                <Image className='object-right'
-                    src="/api/img/perfil-roxo.png"
-                    width={32}
-                    height={32  }
-                    alt="Picture of the author"
-                  />
-              </div>
-            </div>
-            </div>
-          </div>
-          <div></div>
-        </div>
+        <Header />
         <hr />
         {children}
       </body>
