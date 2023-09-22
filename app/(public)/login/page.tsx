@@ -12,7 +12,7 @@ export default function LoginPage() {
         e.preventDefault();
       }}
     >
-      <div>
+      <div className='bg-red-600'>
         <label>Email:</label>
         <input />
       </div>
