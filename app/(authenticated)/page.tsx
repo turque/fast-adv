@@ -1,3 +1,7 @@
+import Cards from "./components/cards";
+
 export default function Home() {
-  return <>Estou na Home do Aplicativo</>;
+  return (
+    <Cards />
+  )
 }
