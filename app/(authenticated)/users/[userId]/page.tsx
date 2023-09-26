@@ -30,6 +30,8 @@ export default async function UserDetailsPage({
             <hr />
             {user.body}
             <hr />
+            {user.avatar}
+            <hr />
         </>
     );
 }
