@@ -1,16 +1,38 @@
 import os
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
+
+from api.schemas import Message, UserDB, UserList, UserPublic, UserSchema
 
 app = FastAPI()
 
 path = os.getcwd()
 
+database = []
 
-@app.get('/api/python')
-def hello_world():
-    return {'message': 'Hello World'}
+
+@app.post('/users/', status_code=201, response_model=UserPublic)
+def create_user(user: UserSchema):
+    user_with_id = UserDB(**user.model_dump(), id=len(database) + 1)
+    database.append(user_with_id)
+    return user_with_id
+
+
+@app.get('/users/', response_model=UserList)
+def read_users():
+    return {'users': database}
+
+
+@app.put('/users/{user_id}', response_model=UserPublic)
+def update_user(user_id: int, user: UserSchema):
+    if user_id > len(database) or user_id < 1:
+        raise HTTPException(status_code=404, detail='User not found')
+
+    user_with_id = UserDB(**user.model_dump(), id=user_id)
+    database[user_id - 1] = user_with_id
+
+    return user_with_id
 
 
 @app.get('/api/img/{filename}')
@@ -19,25 +41,11 @@ def get_img(filename: str):
     return FileResponse(filepath)
 
 
-@app.post('/api/login')
-async def login(request: Request):
-    print(request)
-    return {'message': 'Logado!'}
+@app.delete('/users/{user_id}', response_model=Message)
+def delete_user(user_id: int):
+    if user_id > len(database) or user_id < 1:
+        raise HTTPException(status_code=404, detail='User not found')
 
+    del database[user_id - 1]
 
-@app.get('/api/auth/login')
-async def read_item(request: Request):
-    print(dict(request))
-    return {
-        'user': {
-            'id': 1,
-            'username': 'arnaldo@turque.com.br',
-            'email': 'arnaldo@turque.com.br',
-            'fullname': 'Arnaldo Turque',
-            'role': 'SUPER',
-            'createdAt': '2021-05-30T06:45:19.000Z',
-            'name': 'Arnaldo Turque',
-            'avatar': '/img/perfil-roxo.png',
-        },
-        'token': 'ey...',
-    }
+    return {'detail': 'User deleted'}
