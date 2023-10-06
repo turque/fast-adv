@@ -7,10 +7,10 @@ from passlib.context import CryptContext
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from api.database import get_session
-from api.models import User
-from api.schemas import TokenData
-from api.settings import Settings
+from app.database import get_session
+from app.models import User
+from app.schemas import TokenData
+from app.settings import Settings
 
 settings = Settings()
 

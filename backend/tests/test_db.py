@@ -1,6 +1,5 @@
+from app.models import User
 from sqlalchemy import select
-
-from api.models import User
 
 
 def test_create_user(session):

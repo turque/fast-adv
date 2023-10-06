@@ -31,15 +31,15 @@ freezegun = "^1.2.2"
 
 [tool.ruff]
 line-length = 79
-exclude = ['.venv', 'migrations', 'app', 'node_modules', 'public']
+exclude = ['.venv', 'migrations']
 
 [tool.isort]
 profile = "black"
 line_length = 79
-extend_skip = ['migrations', 'app', 'node_modules', 'public']
+extend_skip = ['migrations']
 
 [tool.pytest.ini_options]
-pythonpath = "./api"
+pythonpath = "./app"
 
 [tool.blue]
 extend-exclude = '(migrations/)'
@@ -47,7 +47,7 @@ extend-exclude = '(migrations/)'
 [tool.taskipy.tasks]
 lint = 'ruff . && blue --check . --diff'
 format = 'blue .  && isort .'
-run = 'uvicorn api.app:app --reload'
+run = 'uvicorn app.main:app --reload'
 pre_test = 'task lint'
 test = 'pytest -s -x --cov=api -vv'
 post_test = 'coverage html'
