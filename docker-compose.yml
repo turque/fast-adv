@@ -3,49 +3,41 @@ version: "3.6"
 x-build-args: &build_args
   INSTALL_PYTHON_VERSION: "3.11"
 
-x-default-volumes: &default_volumes
+x-default-dev-volumes: &default_dev_volumes
   volumes:
-    - ./:/api
-    - ./dev.db:/tmp/dev.db
+    - ./backend:/app
+    - ./backend/db.sqlite3:/tmp/db.sqlite3
 
 services:
   dev:
     build:
-      context: .
+      context: ./backend
       target: development
       args:
         <<: *build_args
-    image: "my_api-development"
+    image: "fast-adv-development"
     ports:
-      - "5000:5000"
+      - "8000:8000"
     env_file:
-      - ./.env
-    <<: *default_volumes
+      - ./backend/.env
+    <<: *default_dev_volumes
 
   prod:
     build:
-      context: .
+      context: ./backend
       target: production
       args:
         <<: *build_args
-    image: "my_api-production"
+    image: "fast-adv-production"
     ports:
-      - "5000:5000"
-    environment:
-      FLASK_ENV: production
-      FLASK_DEBUG: 0
-      LOG_LEVEL: 'INFO'
-      GUNICORN_WORKERS: 4
-    <<: *default_volumes
+      - "8000:8000"
 
   db:
     image: postgres
     restart: always
-    environment:
-      POSTGRES_PASSWORD: fast_adv
-
-  adminer:
-    image: adminer
-    restart: always
     ports:
-      - 8080:8080
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "fast_adv"
+      POSTGRES_PASSWORD: "fast_adv"
+      POSTGRES_DB: "fast_adv"

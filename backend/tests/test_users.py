@@ -1,4 +1,4 @@
-from app.schemas import UserPublic
+from api.schemas import UserPublic
 
 
 def test_create_user(client):
