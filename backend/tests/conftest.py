@@ -5,9 +5,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from api.database import get_session
+from api.database import Base, get_session
 from api.main import app
-from api.models import Base, User
+from api.models import User
 from api.security import get_password_hash
 
 
