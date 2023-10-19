@@ -51,6 +51,8 @@ run = 'uvicorn api.main:app --reload'
 pre_test = 'task lint'
 test = 'pytest -s -x --cov=api -vv'
 post_test = 'coverage html'
+make-migrations = 'alembic revision --autogenerate -m '
+migrate = 'alembic upgrade head'
 
 [build-system]
 requires = ["poetry-core"]
