@@ -1,3 +1,3 @@
-from .user import Team, User
+from .user import Base, Team, User
 
-__all__ = ['Team', 'User']
+__all__ = ['Base', 'Team', 'User']

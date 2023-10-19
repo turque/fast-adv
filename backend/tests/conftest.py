@@ -1,14 +1,15 @@
-import factory
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from api.database import Base, get_session
+from api.database import get_session
 from api.main import app
-from api.models import User
+from api.models import Base
 from api.security import get_password_hash
+
+from .factory import TeamFactory, UserFactory
 
 
 @pytest.fixture
@@ -73,11 +74,14 @@ def token(client, user):
     return response.json()['access_token']
 
 
-class UserFactory(factory.Factory):
-    class Meta:
-        model = User
+@pytest.fixture
+def team(session):
+    owner_id = 1
+    team = TeamFactory(owner_id=owner_id)
 
-    id = factory.Sequence(lambda n: n)
-    name = factory.LazyAttribute(lambda obj: f'test{obj.id}')
-    email = factory.LazyAttribute(lambda obj: f'{obj.name}@test.com')
-    password = factory.LazyAttribute(lambda obj: f'{obj.name}@example.com')
+    session.add(team)
+
+    session.commit()
+    session.refresh(team)
+
+    return team

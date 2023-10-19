@@ -10,6 +10,7 @@ class TeamPublic(BaseModel):
     id: int
     name: str
     team_members: int
+    # owner_id: int
 
 
 class TeamList(BaseModel):
