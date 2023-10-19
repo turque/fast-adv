@@ -75,8 +75,8 @@ def token(client, user):
 
 
 @pytest.fixture
-def team(session):
-    owner_id = 1
+def team(session, user):
+    owner_id = user.id
     team = TeamFactory(owner_id=owner_id)
 
     session.add(team)
