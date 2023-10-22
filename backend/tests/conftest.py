@@ -48,7 +48,7 @@ def user(session):
 
     user.clean_password = 'testtest'
 
-    return user
+    yield user
 
 
 @pytest.fixture
@@ -62,7 +62,7 @@ def other_user(session):
 
     user.clean_password = 'testtest'
 
-    return user
+    yield user
 
 
 @pytest.fixture
