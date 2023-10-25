@@ -85,3 +85,16 @@ def team(session, user):
     session.refresh(team)
 
     return team
+
+
+@pytest.fixture
+def other_team(session, other_user):
+    owner_id = other_user.id
+    team = TeamFactory(owner_id=owner_id)
+
+    session.add(team)
+
+    session.commit()
+    session.refresh(team)
+
+    return team

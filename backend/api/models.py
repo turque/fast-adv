@@ -1,5 +1,8 @@
-from sqlalchemy import ForeignKey
+from datetime import datetime
+
+from sqlalchemy import DateTime, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from sqlalchemy.sql import func
 
 
 class Base(DeclarativeBase):
@@ -17,6 +20,9 @@ class User(Base):
     teams: Mapped[list['Team']] = relationship(
         back_populates='user', cascade='all, delete-orphan'
     )
+    invites: Mapped[list['Invite']] = relationship(
+        back_populates='user', cascade='all, delete-orphan'
+    )
 
 
 class Team(Base):
@@ -32,8 +38,17 @@ class Team(Base):
 class Invite(Base):
     __tablename__ = 'invites'
 
-    invite: Mapped[str]
+    token: Mapped[str] = mapped_column(nullable=False)
+    name: Mapped[str] = mapped_column(nullable=False)
+    email: Mapped[str] = mapped_column(nullable=False)
+    team: Mapped[int] = mapped_column(nullable=False)
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
-    guest_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
+    create_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+    sent_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
 
     user: Mapped[User] = relationship(back_populates='invites')

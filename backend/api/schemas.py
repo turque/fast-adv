@@ -53,3 +53,4 @@ class TeamList(BaseModel):
 class InviteSchema(BaseModel):
     name: str
     email: EmailStr
+    team: int
