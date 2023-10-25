@@ -16,8 +16,8 @@ CurrentUser = Annotated[User, Depends(get_current_user)]
 
 
 @router.post('/', response_model=UserPublic, status_code=201)
-def create_user(user: UserSchema, session: Session):
-    db_user = session.scalar(select(User).where(User.email == user.email))
+def create_user(user: UserSchema, db: Session):
+    db_user = db.scalar(select(User).where(User.email == user.email))
 
     if db_user:
         raise HTTPException(
@@ -27,16 +27,16 @@ def create_user(user: UserSchema, session: Session):
     hashed_password = get_password_hash(user.password)
 
     db_user = User(name=user.name, password=hashed_password, email=user.email)
-    session.add(db_user)
-    session.commit()
-    session.refresh(db_user)
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
 
     return db_user
 
 
 @router.get('/', response_model=UserList)
-def read_users(session: Session, skip: int = 0, limit: int = 100):
-    users = session.scalars(select(User).offset(skip).limit(limit)).all()
+def read_users(db: Session, skip: int = 0, limit: int = 100):
+    users = db.scalars(select(User).offset(skip).limit(limit)).all()
     return {'users': users}
 
 
@@ -44,7 +44,7 @@ def read_users(session: Session, skip: int = 0, limit: int = 100):
 def update_user(
     user_id: int,
     user: UserSchema,
-    session: Session,
+    db: Session,
     current_user: CurrentUser,
 ):
     if current_user.id != user_id:
@@ -53,8 +53,8 @@ def update_user(
     current_user.name = user.name
     current_user.password = user.password
     current_user.email = user.email
-    session.commit()
-    session.refresh(current_user)
+    db.commit()
+    db.refresh(current_user)
 
     return current_user
 
@@ -62,13 +62,13 @@ def update_user(
 @router.delete('/{user_id}', response_model=Message)
 def delete_user(
     user_id: int,
-    session: Session,
+    db: Session,
     current_user: CurrentUser,
 ):
     if current_user.id != user_id:
         raise HTTPException(status_code=400, detail='Not enough permissions')
 
-    session.delete(current_user)
-    session.commit()
+    db.delete(current_user)
+    db.commit()
 
     return {'detail': 'User deleted'}

@@ -22,9 +22,9 @@ router = APIRouter(prefix='/invite', tags=['invites'])
 def create_team(
     user: CurrentUser,
     invite: InviteSchema,
-    session: Session = Depends(get_session),
+    db: Session = Depends(get_session),
 ):
-    team = session.scalar(
+    team = db.scalar(
         select(Team).where(Team.id == invite.team, Team.owner_id == user.id)
     )
 
@@ -35,10 +35,9 @@ def create_team(
 
     db_inviter = Invite(**invite.dict(), token=str(token), user_id=user.id)
 
-    session.add(db_inviter)
-    session.commit()
-    session.refresh(db_inviter)
-
+    db.add(db_inviter)
+    db.commit()
+    db.refresh(db_inviter)
 
     # TODO cadastrar convidado como atleta do time
     # TODO codificar o nome e e-mail com base64 e gerar o hash

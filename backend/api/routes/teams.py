@@ -18,16 +18,16 @@ router = APIRouter(prefix='/teams', tags=['teams'])
 def create_team(
     team: TeamSchema,
     user: CurrentUser,
-    session: Session = Depends(get_session),
+    db: Session = Depends(get_session),
 ):
     db_team: Team = Team(
         name=team.name,
         team_members=team.team_members,
         owner_id=user.id,
     )
-    session.add(db_team)
-    session.commit()
-    session.refresh(db_team)
+    db.add(db_team)
+    db.commit()
+    db.refresh(db_team)
 
     return db_team
 
@@ -35,11 +35,11 @@ def create_team(
 @router.get('/', response_model=TeamList)
 def read_users(
     user: CurrentUser,
-    session: Session = Depends(get_session),
+    db: Session = Depends(get_session),
     skip: int = 0,
     limit: int = 100,
 ):
-    teams = session.scalars(
+    teams = db.scalars(
         select(Team).where(Team.owner_id == user.id).offset(skip).limit(limit)
     ).all()
     return {'teams': teams}
