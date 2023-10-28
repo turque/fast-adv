@@ -53,6 +53,7 @@ test = 'pytest -s -x --cov=api -vv'
 post_test = 'coverage html'
 make-migrations = 'alembic revision --autogenerate -m '
 migrate = 'alembic upgrade head'
+clean = 'find . -name "*.pyc" -exec git rm -f "{}" \;'
 
 [build-system]
 requires = ["poetry-core"]
