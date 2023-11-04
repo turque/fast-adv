@@ -1,4 +1,7 @@
-def test_create_invite(client, token, team):
+def test_create_invite(client, token, team, mocker):
+    mock_SMTP = mocker.MagicMock(name='api.services.smtp.smtplib.SMTP')
+    mocker.patch('api.services.smtp.smtplib.SMTP', new=mock_SMTP)
+
     response = client.post(
         '/invite/create',
         headers={'Authorization': f'Bearer {token}'},

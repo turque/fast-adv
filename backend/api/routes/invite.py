@@ -12,6 +12,7 @@ from api.database import get_session
 from api.models import Invite, Team, User
 from api.schemas import InviteSchema
 from api.security import get_current_user
+from api.services.smtp import send_invite
 
 CurrentUser = Annotated[User, Depends(get_current_user)]
 
@@ -33,12 +34,20 @@ def create_team(
 
     token = uuid.uuid4()
 
-    db_inviter = Invite(**invite.dict(), token=str(token), user_id=user.id)
+    db_inviter = Invite(
+        **invite.model_dump(mode='json'), token=str(token), user_id=user.id
+    )
 
     db.add(db_inviter)
     db.commit()
     db.refresh(db_inviter)
 
     # TODO cadastrar convidado como atleta do time
-    # TODO codificar o nome e e-mail com base64 e gerar o hash
     # TODO disparar o convite via e-mail
+    send_invite(
+        user.name.capitalize,
+        team.name.capitalize,
+        invite.name,
+        invite.email,
+        db_inviter.token,
+    )

@@ -11,6 +11,7 @@
     - [alimentos](#alimentos)
     - [SMART](#smart)
     - [SWOT](#swot)
+    - [Fechamento](#fechamento)
 
 ## Entidades
 
@@ -18,18 +19,18 @@
 
 regras de negócio
 
-- um usuário pode criar um ou mais times
-- um usuário pode cadastrar uma ou mais provas
-- um usuário pode convidar um ou mais atletas
+- [x] um usuário pode criar um ou mais times
+- [ ] um usuário pode cadastrar uma ou mais provas
+- [x] um usuário pode convidar um ou mais atletas
 
 ### atletas
 
 regras de négócio
 
-- um atleta pode estar em um ou mais times
-- um alteta pode participar de uma ou mais provas
-- um atleta pode ter um ou mais equipamentos
-- um atleta pode cadastrar um ou mais alimentos
+- [ ] um atleta pode estar em um ou mais times
+- [ ] um alteta pode participar de uma ou mais provas
+- [ ] um atleta pode ter um ou mais equipamentos
+- [ ] um atleta pode cadastrar um ou mais alimentos
 
 atributos
 
@@ -43,9 +44,9 @@ atributos
 
 regras de négócio
 
-- uma equipe pode ter várias formações (quarteto/dupla/solo)
-- uma equipe pode ter vários atletas
-- uma equipe participa de uma ou mais provas com formações diferentes
+- [ ] uma equipe pode ter várias formações (quarteto/dupla/solo)
+- [ ] uma equipe pode ter vários atletas
+- [ ] uma equipe participa de uma ou mais provas com formações diferentes
 
 atributos
 
@@ -57,7 +58,7 @@ atributos
 
 regras de négócio
 
-- um organizador pode criar uma ou mais provas
+- [ ] pode existir uma ou mais provas de um mesmo organizador
 
 atributos
 
@@ -69,9 +70,9 @@ atributos
 
 regras de négócio
 
-- uma prova tem apenas um time
-- uma prova tem um ou mais equipamentos obrigatórios
-- uma prova tem um ou mais organizadores
+- [ ] uma prova tem apenas um time
+- [ ] uma prova tem um ou mais equipamentos obrigatórios
+- [ ] uma prova tem um ou mais organizadores
 
 atributos
 
@@ -88,8 +89,8 @@ atributos
 
 regras de négócio
 
-- um equipamento pertece apenas a um atleta
-- um equipamento pode ser utilizado em uma ou mais provas
+- [ ] um equipamento pertece apenas a um atleta
+- [ ] um equipamento pode ser utilizado em uma ou mais provas
 
 atributos
 
@@ -103,8 +104,8 @@ atributos
 
 regras de négócio
 
-- um tipo de alimento pode ser compartilhado com o time
-- um tipo de alimento pode ser utilizado em uma ou mais provas
+- [ ] um tipo de alimento pode ser compartilhado com o time
+- [ ] um tipo de alimento pode ser utilizado em uma ou mais provas
 
 atributos
 
@@ -118,8 +119,8 @@ atributos
 
 regras de négócio
 
-- uma avaliação está ligada a apenas uma prova
-- uma avaliação está ligada a apenas um atleta
+- [ ] uma avaliação está ligada a apenas uma prova
+- [ ] uma avaliação está ligada a apenas um atleta
 
 atributos
 
@@ -130,10 +131,12 @@ atributos
 
 regras de négócio
 
-- uma avaliação está ligada a apenas uma prova
-- uma avaliação está ligada a apenas um atleta
+- [ ] uma avaliação está ligada a apenas uma prova
+- [ ] uma avaliação está ligada a apenas um atleta
 
 atributos
 
 - item
 - resposta
+
+### Fechamento

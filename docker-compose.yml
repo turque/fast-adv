@@ -41,3 +41,18 @@ services:
       POSTGRES_USER: "fast_adv"
       POSTGRES_PASSWORD: "fast_adv"
       POSTGRES_DB: "fast_adv"
+
+  smtp:
+    image: rnwood/smtp4dev:v3
+    restart: always
+    ports:
+      - '3000:80'
+      - '25:25'
+      - '143:143'
+    volumes:
+        - smtp4dev-data:/smtp4dev
+    environment:
+      - ServerOptions__HostName=smtp4dev
+
+volumes:
+  smtp4dev-data:
