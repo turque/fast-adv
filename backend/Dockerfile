@@ -1,12 +1,11 @@
 # ================================== BUILDER ===================================
-ARG INSTALL_PYTHON_VERSION=${INSTALL_PYTHON_VERSION:-PYTHON_VERSION_NOT_SET}
+ARG INSTALL_PYTHON_VERSION=3.11
 
-FROM python:${INSTALL_PYTHON_VERSION}-slim AS builder
+FROM python:3.11-slim AS builder
 ENV POETRY_VIRTUALENVS_CREATE=false
 
 WORKDIR /app
 
-EXPOSE 8000
 
 RUN pip install poetry
 RUN poetry config installer.max-workers 10
@@ -14,6 +13,7 @@ RUN poetry config installer.max-workers 10
 COPY pyproject.toml .
 RUN poetry install --no-interaction --no-ansi
 
+EXPOSE 8000
 
 # ================================= DEVELOPMENT ================================
 FROM builder AS development
