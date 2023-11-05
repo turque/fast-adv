@@ -1,12 +1,16 @@
 # ================================== BUILDER ===================================
-ARG INSTALL_PYTHON_VERSION=3.11
+ARG INSTALL_PYTHON_VERSION=${INSTALL_PYTHON_VERSION:-PYTHON_VERSION_NOT_SET}
 
-FROM python:3.11-slim AS builder
+FROM python:${INSTALL_PYTHON_VERSION}-slim AS builder
 ENV POETRY_VIRTUALENVS_CREATE=false
 
 WORKDIR /app
 
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq-dev \
+    gcc \
+    python3-dev
 RUN pip install poetry
 RUN poetry config installer.max-workers 10
 
