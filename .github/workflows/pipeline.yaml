@@ -35,6 +35,7 @@ jobs:
       
 
   deploy-backend:
+    needs: test-backend
     runs-on: ubuntu-latest
 
     defaults:
