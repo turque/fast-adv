@@ -32,6 +32,19 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
+      
+
+  deploy-backend:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend
+
+    steps:
+      - name: Copia os arquivos do repo
+        uses: actions/checkout@v3
+
       - name: Instalar flyctl
         uses: superfly/flyctl-actions/setup-flyctl@master
 
