@@ -32,11 +32,8 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
-      - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Build and push Docker image to Fly.io
-        with:
+        uses: superfly/flyctl-actions/setup-flyctl@master
+        env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        run: |
-          flyctl deploy --local-only
-          flyctl deploy
 
