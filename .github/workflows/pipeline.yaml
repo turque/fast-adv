@@ -1,5 +1,13 @@
-name: Pipeline
-on: [push, pull_request]
+name: Fly Deploy
+run-name: ${{ github.actor }} is deploing on Fly.io
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   test-backend:
