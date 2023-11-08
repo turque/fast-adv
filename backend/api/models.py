@@ -23,6 +23,9 @@ class User(Base):
     invites: Mapped[list['Invite']] = relationship(
         back_populates='user', cascade='all, delete-orphan'
     )
+    races: Mapped[list['Race']] = relationship(
+        back_populates='user', cascade='all, delete-orphan'
+    )
 
 
 class Team(Base):
@@ -52,3 +55,22 @@ class Invite(Base):
     )
 
     user: Mapped[User] = relationship(back_populates='invites')
+
+
+class Race(Base):
+    __tablename__ = 'races'
+
+    name: Mapped[str] = mapped_column(nullable=False)
+    place: Mapped[str] = mapped_column(nullable=True)
+    race_date: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=True,
+    )
+    distance: Mapped[int] = mapped_column(nullable=True)
+    url_race: Mapped[str] = mapped_column(nullable=True)
+    race_description: Mapped[str] = mapped_column(nullable=True)
+    place_description: Mapped[str] = mapped_column(nullable=True)
+    observations: Mapped[str] = mapped_column(nullable=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
+
+    user: Mapped[User] = relationship(back_populates='races')
