@@ -4,7 +4,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from api.settings import Settings
+from app.settings import Settings
 
 settings = Settings()
 
@@ -12,7 +12,7 @@ settings = Settings()
 def send_invite(sender, team_name, receiver_name, receiver_email, token):
     message = MIMEMultipart('alternative')
     message['Subject'] = 'multipart test'
-    message['From'] = sender_email = settings.SENDER_EMAIL
+    message['From'] = EMAILS_FROM_EMAIL = settings.EMAILS_FROM_EMAIL
     message['To'] = receiver_email
 
     # Create the plain-text and HTML version of your message
@@ -45,7 +45,9 @@ def send_invite(sender, team_name, receiver_name, receiver_email, token):
     # Create secure connection with server and send email
     # context = ssl.create_default_context()
     # with smtplib.SMTP_SSL("localhost", 143, context=context) as server:
-    # server.login(sender_email, password)
+    # server.login(EMAILS_FROM_EMAIL, password)
 
-    with smtplib.SMTP(host=settings.HOST, port=settings.HOST_PORT) as server:
-        server.sendmail(sender_email, receiver_email, message.as_string())
+    with smtplib.SMTP(
+        host=settings.SMTP_HOST, port=settings.SMTP_PORT
+    ) as server:
+        server.sendmail(EMAILS_FROM_EMAIL, receiver_email, message.as_string())

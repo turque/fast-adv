@@ -4,10 +4,10 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from api.database import get_session
-from api.models import Team, User
-from api.schemas import TeamList, TeamPublic, TeamSchema
-from api.security import get_current_user
+from app.database import get_session
+from app.models import Team, User
+from app.schemas import TeamList, TeamPublic, TeamSchema
+from app.security import get_current_user
 
 CurrentUser = Annotated[User, Depends(get_current_user)]
 

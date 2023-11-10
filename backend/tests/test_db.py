@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy import select
 
-from api.models import Invite, Race, Team, User
+from app.models import Invite, Race, Team, User
 
 
 def test_create_user(session):

@@ -4,10 +4,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from api.database import get_session
-from api.main import app
-from api.models import Base
-from api.security import get_password_hash
+from app.database import get_session
+from app.main import app
+from app.models import Base
+from app.security import get_password_hash
 
 from .factory import TeamFactory, UserFactory
 

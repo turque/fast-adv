@@ -8,11 +8,11 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from api.database import get_session
-from api.models import Invite, Team, User
-from api.schemas import InviteSchema
-from api.security import get_current_user
-from api.services.smtp import send_invite
+from app.database import get_session
+from app.models import Invite, Team, User
+from app.schemas import InviteSchema
+from app.security import get_current_user
+from app.services.smtp import send_invite
 
 CurrentUser = Annotated[User, Depends(get_current_user)]
 

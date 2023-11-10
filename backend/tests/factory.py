@@ -2,7 +2,7 @@ from enum import Enum
 
 import factory
 
-from api.models import Team, User
+from app.models import Team, User
 
 
 class UserFactory(factory.Factory):
