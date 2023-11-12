@@ -4,14 +4,14 @@ from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.database import get_session
+from app.core.security import get_current_user
+from app.db.session import get_session
 from app.models import Race, User
 from app.schemas import RaceList, RacePublic, RaceSchema
-from app.security import get_current_user
 
 CurrentUser = Annotated[User, Depends(get_current_user)]
 
-router = APIRouter(prefix='/races', tags=['races'])
+router = APIRouter()
 
 
 @router.post('/', response_model=RacePublic)

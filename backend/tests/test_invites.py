@@ -3,7 +3,7 @@ def test_create_invite(client, token, team, mocker):
     mocker.patch('app.services.smtp.smtplib.SMTP', new=mock_SMTP)
 
     response = client.post(
-        '/invite/create',
+        'api/v1/invite/create',
         headers={'Authorization': f'Bearer {token}'},
         json={'name': 'guest1', 'email': 'guest1@mail.com', 'team': team.id},
     )
@@ -13,14 +13,14 @@ def test_create_invite(client, token, team, mocker):
 
 def test_create_invite_without_parameters(client, token, team):
     response = client.post(
-        '/invite/create',
+        'api/v1/invite/create',
         headers={'Authorization': f'Bearer {token}'},
         json={'email': 'guest1@mail.com', 'team': team.id},
     )
 
     assert response.status_code == 422
     response = client.post(
-        '/invite/create',
+        'api/v1/invite/create',
         headers={'Authorization': f'Bearer {token}'},
         json={'name': 'guest1', 'team': team.id},
     )
@@ -30,7 +30,7 @@ def test_create_invite_without_parameters(client, token, team):
 
 def test_create_invite_with_invalid_team_id(client, token, other_team):
     response = client.post(
-        '/invite/create',
+        'api/v1/invite/create',
         headers={'Authorization': f'Bearer {token}'},
         json={
             'name': 'guest1',

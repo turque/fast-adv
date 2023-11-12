@@ -5,12 +5,16 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.database import get_session
-from app.models import User
+from app.core.security import (
+    create_access_token,
+    get_current_user,
+    verify_password,
+)
+from app.db.session import get_session
+from app.models.user import User
 from app.schemas import Token
-from app.security import create_access_token, get_current_user, verify_password
 
-router = APIRouter(prefix='/auth', tags=['auth'])
+router = APIRouter()
 
 OAuth2Form = Annotated[OAuth2PasswordRequestForm, Depends()]
 Session = Annotated[Session, Depends(get_session)]

@@ -4,9 +4,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-from app.settings import Settings
-
-settings = Settings()
+from app.core.settings import settings
 
 
 def send_invite(sender, team_name, receiver_name, receiver_email, token):

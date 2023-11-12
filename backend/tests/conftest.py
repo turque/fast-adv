@@ -4,10 +4,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from app.database import get_session
+from app.core.security import get_password_hash
+from app.db.base import Base
+from app.db.session import get_session
 from app.main import app
-from app.models import Base
-from app.security import get_password_hash
 
 from .factory import TeamFactory, UserFactory
 
@@ -68,7 +68,7 @@ def other_user(session):
 @pytest.fixture
 def token(client, user):
     response = client.post(
-        '/auth/token',
+        'api/v1/auth/token',
         data={'username': user.email, 'password': user.clean_password},
     )
     return response.json()['access_token']

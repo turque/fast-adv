@@ -7,16 +7,13 @@ from passlib.context import CryptContext
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.database import get_session
+from app.core.settings import settings
+from app.db.session import get_session
 from app.models import User
 from app.schemas import TokenData
-from app.settings import Settings
-
-settings = Settings()
-
 
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='auth/token')
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='api/v1/auth/token')
 
 
 def create_access_token(data: dict):

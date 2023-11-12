@@ -1,6 +1,6 @@
 def test_create_team(client, token):
     response = client.post(
-        '/teams/',
+        'api/v1/teams/',
         headers={'Authorization': f'Bearer {token}'},
         json={
             'name': 'Time1',
@@ -17,7 +17,7 @@ def test_create_team(client, token):
 
 def test_get_user_teams(client, token, team):
     response = client.get(
-        '/teams/',
+        'api/v1/teams/',
         headers={'Authorization': f'Bearer {token}'},
     )
 

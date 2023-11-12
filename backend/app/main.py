@@ -1,18 +1,10 @@
-import logging
-
 import sentry_sdk
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
 
-from app.routes import auth, invites, races, resources, teams, users
-from app.settings import Settings
+from app.api.v1.api import api_router
+from app.core.settings import settings
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-settings = Settings()
-
-
-logger.info('Initialize Sentry SDK')
 sentry_sdk.init(
     dsn=settings.SENTRY_DSN,
     # Set traces_sample_rate to 1.0 to capture 100%
@@ -24,14 +16,23 @@ sentry_sdk.init(
     profiles_sample_rate=1.0,
 )
 
-app = FastAPI()
+app = FastAPI(
+    title=settings.PROJECT_NAME,
+    openapi_url=f'{settings.API_V1_STR}/openapi.json',
+)
 
-app.include_router(users.router)
-app.include_router(auth.router)
-app.include_router(resources.router)
-app.include_router(teams.router)
-app.include_router(invites.router)
-app.include_router(races.router)
+if settings.BACKEND_CORS_ORIGINS:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=[
+            str(origin) for origin in settings.BACKEND_CORS_ORIGINS
+        ],
+        allow_credentials=True,
+        allow_methods=['*'],
+        allow_headers=['*'],
+    )
+
+app.include_router(api_router, prefix=settings.API_V1_STR)
 
 
 @app.get('/')

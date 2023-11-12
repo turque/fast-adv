@@ -33,7 +33,7 @@ class Team(Base):
 
     name: Mapped[str] = mapped_column(nullable=False, index=True)
     team_members: Mapped[int]
-    owner_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
+    owner_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
 
     user: Mapped[User] = relationship(back_populates='teams')
 
@@ -45,7 +45,7 @@ class Invite(Base):
     name: Mapped[str] = mapped_column(nullable=False)
     email: Mapped[str] = mapped_column(nullable=False)
     team: Mapped[int] = mapped_column(nullable=False)
-    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
+    user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
     create_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )
@@ -71,6 +71,6 @@ class Race(Base):
     race_description: Mapped[str] = mapped_column(nullable=True)
     place_description: Mapped[str] = mapped_column(nullable=True)
     observations: Mapped[str] = mapped_column(nullable=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
+    user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
 
     user: Mapped[User] = relationship(back_populates='races')
