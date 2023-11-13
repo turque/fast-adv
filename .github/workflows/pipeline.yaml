@@ -1,5 +1,5 @@
 name: Fly Deploy
-run-name: ${{ github.actor }} is deploing on Fly.io
+run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
 
 on:
   push:
@@ -33,7 +33,7 @@ jobs:
         run: poetry install
 
       - name: Rodar os testes
-        run: poetry run task test --cov-report=xml -F backend
+        run: poetry run task test --cov-report=xml
 
       - name: Subir cobertura para o codecov
         uses: codecov/codecov-action@v3
