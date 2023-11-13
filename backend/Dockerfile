@@ -22,7 +22,7 @@ EXPOSE 8000
 # ================================= DEVELOPMENT ================================
 FROM builder AS development
 
-CMD [ "poetry", "run", "uvicorn", "--host", "0.0.0.0", "api.main:app", "--reload" ]
+CMD [ "poetry", "run", "uvicorn", "--host", "0.0.0.0", "app.main:app", "--reload" ]
 
 
 # ================================= PRODUCTION =================================
@@ -30,4 +30,4 @@ FROM builder AS production
 
 COPY . .
 
-CMD [ "poetry", "run", "uvicorn", "--host", "0.0.0.0", "api.main:app" ]
+CMD [ "poetry", "run", "uvicorn", "--host", "0.0.0.0", "app.main:app" ]
