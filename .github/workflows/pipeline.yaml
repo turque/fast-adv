@@ -33,7 +33,7 @@ jobs:
         run: poetry install
 
       - name: Rodar os testes
-        run: poetry run task test --cov-report=xml
+        run: poetry run task test --cov-report=xml -F backend
 
       - name: Subir cobertura para o codecov
         uses: codecov/codecov-action@v3
