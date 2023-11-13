@@ -1,5 +1,5 @@
 name: Fly Deploy
-run-name: Deploy to ${{ inputs.deploy_target }} by @${{ github.actor }}
+run-name: Deploy to Fly.io by @${{ github.actor }}
 
 on:
   push:
