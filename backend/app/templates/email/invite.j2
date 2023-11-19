@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+    <p>Olá {{ receiver_name }},<br>
+        {{ sender }} está montando um time para competir na {{ race }} e quer que você faça parte da equipe!!!<br>
+        <a href="{{ url_to_invite }}/{{ token }}">
+            Me juntar ao time {{ team }}
+        </a>.
+    </p>
+{% endblock %}

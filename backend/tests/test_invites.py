@@ -1,6 +1,12 @@
-def test_create_invite(client, token, team, mocker):
-    mock_SMTP = mocker.MagicMock(name='app.services.smtp.smtplib.SMTP')
-    mocker.patch('app.services.smtp.smtplib.SMTP', new=mock_SMTP)
+# from pprint import pprint
+
+from sqlalchemy import select
+
+from app.models import Invite
+
+
+def test_create_invite(session, client, token, team, mocker):
+    mocker.patch('app.api.v1.endpoints.invites.send_email', return_value=True)
 
     response = client.post(
         'api/v1/invite/create',
@@ -8,6 +14,24 @@ def test_create_invite(client, token, team, mocker):
         json={'name': 'guest1', 'email': 'guest1@mail.com', 'team': team.id},
     )
 
+    invite = session.scalar(select(Invite))
+
+    assert invite.sent_at is not None
+    assert response.status_code == 201
+
+
+def test_create_invite_not_sent(session, client, token, team, mocker):
+    mocker.patch('app.api.v1.endpoints.invites.send_email', return_value=False)
+
+    response = client.post(
+        'api/v1/invite/create',
+        headers={'Authorization': f'Bearer {token}'},
+        json={'name': 'guest1', 'email': 'guest1@mail.com', 'team': team.id},
+    )
+
+    invite = session.scalar(select(Invite))
+
+    assert invite.sent_at is None
     assert response.status_code == 201
 
 

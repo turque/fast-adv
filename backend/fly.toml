@@ -22,8 +22,10 @@ primary_region = "gru"
   SMTP_PORT=25
   SMTP_HOST='localhost'
   SMTP_USER=''
-  SMTP_PASSWORD=''
-  EMAILS_FROM_EMAIL='info@fast-adv.com'
+  SERVER_HOST=''
+  PROJECT_NAME='Fast-ADV'
+  EMAILS_FROM_EMAIL="ro-reply@turque.com.br"
+  EMAILS_ENABLED='True'
 
 [http_service]
   internal_port = 8000

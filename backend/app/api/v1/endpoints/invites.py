@@ -1,7 +1,5 @@
 import uuid
-
-# from datetime import datetime
-# from hashlib import sha256
+from datetime import datetime
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -9,10 +7,11 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.security import get_current_user
+from app.core.settings import settings
 from app.db.session import get_session
 from app.models import Invite, Team, User
 from app.schemas import InviteSchema
-from app.services.smtp import send_invite
+from app.utils.email import send_email
 
 CurrentUser = Annotated[User, Depends(get_current_user)]
 
@@ -44,10 +43,21 @@ def create_team(
 
     # TODO cadastrar convidado como atleta do time
     # TODO disparar o convite via e-mail
-    send_invite(
-        user.name.capitalize,
-        team.name.capitalize,
-        invite.name,
+
+    subject = f'Um convite especial de {user.name.capitalize}'
+
+    sent = send_email(
         invite.email,
-        db_inviter.token,
+        invite.name,
+        subject,
+        settings.TEMPLATE_INVITE,
+        receiver_name=invite.name,
+        sender=user.name.capitalize,
+        race='Fixo',
+        url_to_invite=settings.SERVER_HOST,
+        token=db_inviter.token,
+        team=team.name.capitalize,
     )
+    if sent:
+        db_inviter.sent_at = datetime.now()
+        db.commit()

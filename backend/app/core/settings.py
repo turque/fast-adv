@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file='.env')
 
     API_V1_STR: str = '/api/v1'
+    SERVER_HOST: AnyHttpUrl
     SECRET_KEY: str = secrets.token_urlsafe(32)
     # 60 minutes * 24 hours * 8 days = 8 days  int = 60 * 24 * 8
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
@@ -46,11 +47,14 @@ class Settings(BaseSettings):
     EMAILS_FROM_NAME: Optional[str] = None
 
     EMAIL_RESET_TOKEN_EXPIRE_HOURS: int = 48
-    EMAIL_TEMPLATES_DIR: str = '/app/app/email-templates/build'
     EMAILS_ENABLED: bool = False
 
     EMAIL_TEST_USER: EmailStr = 'test@example.com'  # type: ignore
     USERS_OPEN_REGISTRATION: bool = False
+    BREVO_API_KEY: str = None
+
+    TEMPLATE_TEST: str = 'email/test_email.j2'
+    TEMPLATE_INVITE: str = 'email/invite.j2'
 
 
 settings = Settings()

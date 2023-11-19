@@ -9,7 +9,7 @@ from app.db.session import get_session
 from app.models import User
 from app.schemas import Message, UserList, UserPublic, UserSchema
 
-router = APIRouter(prefix='/users', tags=['users'])
+router = APIRouter()
 
 Session = Annotated[Session, Depends(get_session)]
 CurrentUser = Annotated[User, Depends(get_current_user)]
