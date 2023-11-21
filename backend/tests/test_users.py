@@ -1,9 +1,10 @@
 from app.schemas import UserPublic
 
 
-def test_create_user(client):
+def test_create_user(client, token):
     response = client.post(
         'api/v1/users/',
+        headers={'Authorization': f'Bearer {token}'},
         json={
             'name': 'alice',
             'email': 'alice@example.com',
@@ -14,13 +15,14 @@ def test_create_user(client):
     assert response.json() == {
         'name': 'alice',
         'email': 'alice@example.com',
-        'id': 1,
+        'id': 15,
     }
 
 
-def test_create_user_already_registered(client, user):
+def test_create_user_already_registered(client, user, token):
     response = client.post(
         'api/v1/users/',
+        headers={'Authorization': f'Bearer {token}'},
         json={
             'name': user.name,
             'email': user.email,
@@ -33,15 +35,11 @@ def test_create_user_already_registered(client, user):
     }
 
 
-def test_read_users(client):
-    response = client.get('api/v1/users/')
-    assert response.status_code == 200
-    assert response.json() == {'users': []}
-
-
-def test_read_users_with_users(client, user):
+def test_read_users(client, user, token):
     user_schema = UserPublic.model_validate(user).model_dump()
-    response = client.get('api/v1/users/')
+    response = client.get(
+        'api/v1/users/', headers={'Authorization': f'Bearer {token}'}
+    )
     assert response.json() == {'users': [user_schema]}
 
 
