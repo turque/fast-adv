@@ -16,7 +16,11 @@ CurrentUser = Annotated[User, Depends(get_current_user)]
 
 
 @router.post('/', response_model=UserPublic, status_code=201)
-def create_user(user: UserSchema, db: Session):
+def create_user(
+    user: UserSchema,
+    db: Session,
+    current_user: CurrentUser,
+):
     db_user = db.scalar(select(User).where(User.email == user.email))
 
     if db_user:
@@ -35,7 +39,9 @@ def create_user(user: UserSchema, db: Session):
 
 
 @router.get('/', response_model=UserList)
-def read_users(db: Session, skip: int = 0, limit: int = 100):
+def read_users(
+    db: Session, current_user: CurrentUser, skip: int = 0, limit: int = 100
+):
     users = db.scalars(select(User).offset(skip).limit(limit)).all()
     return {'users': users}
 
