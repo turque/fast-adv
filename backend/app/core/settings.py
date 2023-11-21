@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file='.env')
 
     API_V1_STR: str = '/api/v1'
-    SERVER_HOST: AnyHttpUrl
+    SERVER_HOST: AnyHttpUrl = 'http://localhost'
     SECRET_KEY: str = secrets.token_urlsafe(32)
     # 60 minutes * 24 hours * 8 days = 8 days  int = 60 * 24 * 8
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
@@ -28,7 +28,7 @@ class Settings(BaseSettings):
         raise ValueError(v)
 
     PROJECT_NAME: str = 'fast-adv'
-    SENTRY_DSN: str
+    SENTRY_DSN: str = ''
 
     @field_validator('SENTRY_DSN')
     def sentry_dsn_can_be_blank(cls, v: str) -> Optional[str]:
@@ -36,7 +36,7 @@ class Settings(BaseSettings):
             return None
         return v
 
-    DATABASE_URL: Optional[str] = None
+    DATABASE_URL: Optional[str] = 'sqlite:///:memory:'
 
     SMTP_TLS: bool = True
     SMTP_PORT: Optional[int] = None
@@ -51,7 +51,7 @@ class Settings(BaseSettings):
 
     EMAIL_TEST_USER: EmailStr = 'test@example.com'  # type: ignore
     USERS_OPEN_REGISTRATION: bool = False
-    BREVO_API_KEY: str
+    BREVO_API_KEY: str = ''
 
     TEMPLATE_TEST: str = 'email/test_email.j2'
     TEMPLATE_INVITE: str = 'email/invite.j2'
