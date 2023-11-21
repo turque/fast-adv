@@ -51,7 +51,7 @@ class Settings(BaseSettings):
 
     EMAIL_TEST_USER: EmailStr = 'test@example.com'  # type: ignore
     USERS_OPEN_REGISTRATION: bool = False
-    BREVO_API_KEY: str = None
+    BREVO_API_KEY: str
 
     TEMPLATE_TEST: str = 'email/test_email.j2'
     TEMPLATE_INVITE: str = 'email/invite.j2'
