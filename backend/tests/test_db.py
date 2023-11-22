@@ -31,12 +31,13 @@ def test_create_team(session, user: User):
     assert team in user.teams
 
 
-def test_create_invite(session, user: User, team: Team):
+def test_create_invite(session, user: User, team: Team, race: Race):
     invite = Invite(
         token='123456789abcdef',
         name='athlete1',
         email='athlete1@email.com',
         team=team.id,
+        race=race.id,
         user_id=user.id,
     )
 

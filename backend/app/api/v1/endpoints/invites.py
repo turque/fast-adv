@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 from app.core.security import get_current_user
 from app.core.settings import settings
 from app.db.session import get_session
-from app.models import Invite, Team, User
+from app.models import Invite, Race, Team, User
 from app.schemas import InviteSchema
 from app.utils.email import send_email
 
@@ -19,7 +19,7 @@ router = APIRouter()
 
 
 @router.post('/create', status_code=201)
-def create_team(
+def create_invite(
     user: CurrentUser,
     invite: InviteSchema,
     db: Session = Depends(get_session),
@@ -29,7 +29,18 @@ def create_team(
     )
 
     if not team:
-        raise HTTPException(status_code=404, detail='Invalid or absent team')
+        raise HTTPException(
+            status_code=404, detail='Invalid or nonexistent team'
+        )
+
+    race = db.scalar(
+        select(Race).where(Race.id == invite.race, Team.owner_id == user.id)
+    )
+
+    if not race:
+        raise HTTPException(
+            status_code=404, detail='Invalid or nonexistent race'
+        )
 
     token = uuid.uuid4()
 
@@ -42,7 +53,6 @@ def create_team(
     db.refresh(db_inviter)
 
     # TODO cadastrar convidado como atleta do time
-    # TODO disparar o convite via e-mail
 
     subject = f'Um convite especial de {user.name.capitalize}'
 
@@ -53,7 +63,7 @@ def create_team(
         settings.TEMPLATE_INVITE,
         receiver_name=invite.name,
         sender=user.name.capitalize,
-        race='Fixo',
+        race=race.name,
         url_to_invite=settings.SERVER_HOST,
         token=db_inviter.token,
         team=team.name.capitalize,

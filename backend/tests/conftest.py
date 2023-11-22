@@ -9,7 +9,7 @@ from app.db.base import Base
 from app.db.session import get_session
 from app.main import app
 
-from .factory import TeamFactory, UserFactory
+from .factory import RaceFactory, TeamFactory, UserFactory
 
 
 @pytest.fixture
@@ -98,3 +98,16 @@ def other_team(session, other_user):
     session.refresh(team)
 
     return team
+
+
+@pytest.fixture
+def race(session, user):
+    user_id = user.id
+    race = RaceFactory(user_id=user_id)
+
+    session.add(race)
+
+    session.commit()
+    session.refresh(race)
+
+    return race

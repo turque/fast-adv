@@ -5,3 +5,4 @@ class InviteSchema(BaseModel):
     name: str
     email: EmailStr
     team: int
+    race: int
