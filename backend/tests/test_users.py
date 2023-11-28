@@ -1,7 +1,7 @@
 from app.schemas import UserPublic
 
 
-def test_create_user(client, token):
+def test_create_user(client, user, token):
     response = client.post(
         'api/v1/users/',
         headers={'Authorization': f'Bearer {token}'},
@@ -15,7 +15,7 @@ def test_create_user(client, token):
     assert response.json() == {
         'name': 'alice',
         'email': 'alice@example.com',
-        'id': 15,
+        'id': user.id + 1,
     }
 
 
