@@ -20,7 +20,7 @@
 regras de negócio
 
 - [x] um usuário pode criar um ou mais times
-- [ ] um usuário pode cadastrar uma ou mais provas
+- [x] um usuário pode cadastrar uma ou mais provas
 - [x] um usuário pode convidar um ou mais atletas
 
 ### atletas
