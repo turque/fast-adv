@@ -1,5 +1,6 @@
 import sentry_sdk
 from fastapi import FastAPI
+from prometheus_fastapi_instrumentator import Instrumentator
 from starlette.middleware.cors import CORSMiddleware
 
 from app.api.v1.api import api_router
@@ -33,6 +34,7 @@ if settings.BACKEND_CORS_ORIGINS:
     )
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
+Instrumentator().instrument(app).expose(app)
 
 
 @app.get('/')
