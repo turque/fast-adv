@@ -119,8 +119,8 @@ atributos
 
 regras de négócio
 
-- [ ] uma avaliação está ligada a apenas uma prova
-- [ ] uma avaliação está ligada a apenas um atleta
+- [x] uma avaliação está ligada a apenas uma prova
+- [x] uma avaliação está ligada a apenas um atleta
 
 atributos
 
@@ -131,8 +131,8 @@ atributos
 
 regras de négócio
 
-- [ ] uma avaliação está ligada a apenas uma prova
-- [ ] uma avaliação está ligada a apenas um atleta
+- [x] uma avaliação está ligada a apenas uma prova
+- [x] uma avaliação está ligada a apenas um atleta
 
 atributos
 
