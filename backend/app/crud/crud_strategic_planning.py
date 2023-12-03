@@ -40,14 +40,22 @@ class CRUDStrategicPlanning(
         ).all()
 
     def get_by_user(
-        self, db: Session, *, race_id: int, user_id: int
+        self,
+        db: Session,
+        race_id: int,
+        user_id: int,
+        skip: int = 0,
+        limit: int = 100,
     ) -> StrategicPlanning:
         return db.scalars(
-            select(StrategicPlanning).where(
+            select(StrategicPlanning)
+            .where(
                 StrategicPlanning.race_id == race_id,
                 StrategicPlanning.user_id == user_id,
             )
-        )
+            .offset(skip)
+            .limit(limit)
+        ).one_or_none()
 
 
 strategic = CRUDStrategicPlanning(StrategicPlanning)

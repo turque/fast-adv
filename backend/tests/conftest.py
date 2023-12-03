@@ -9,7 +9,12 @@ from app.db.base import Base
 from app.db.session import get_session
 from app.main import app
 
-from .factory import RaceFactory, TeamFactory, UserFactory
+from .factory import (
+    RaceFactory,
+    StrategicPlanningFactory,
+    TeamFactory,
+    UserFactory,
+)
 
 
 @pytest.fixture
@@ -84,7 +89,7 @@ def team(session, user):
     session.commit()
     session.refresh(team)
 
-    return team
+    yield team
 
 
 @pytest.fixture
@@ -97,7 +102,7 @@ def other_team(session, other_user):
     session.commit()
     session.refresh(team)
 
-    return team
+    yield team
 
 
 @pytest.fixture
@@ -110,4 +115,18 @@ def race(session, user):
     session.commit()
     session.refresh(race)
 
-    return race
+    yield race
+
+
+@pytest.fixture
+def strategic_planning(session, user, race):
+    user_id = user.id
+    race_id = race.id
+    strategic = StrategicPlanningFactory(user_id=user_id, race_id=race_id)
+
+    session.add(strategic)
+
+    session.commit()
+    session.refresh(strategic)
+
+    yield strategic

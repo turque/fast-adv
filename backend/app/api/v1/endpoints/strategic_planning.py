@@ -12,7 +12,7 @@ Session = Annotated[Session, Depends(get_session)]
 CurrentUser = Annotated[models.User, Depends(get_current_user)]
 
 
-@router.get('/{id}', response_model=List[schemas.StrategicPlanning])
+@router.get('/{race_id}', response_model=List[schemas.StrategicPlanning])
 def read_strategic_planning_by_race(
     db: Session,
     current_user: CurrentUser,
@@ -47,7 +47,9 @@ def create_strategic_planning(
     if db_strategic:
         raise HTTPException(
             status_code=400,
-            detail='User has already registered strategic planning for this race',
+            detail=(
+                'User has already registered strategic planning for this race'
+            ),
         )
 
     strategic = crud.strategic.create(

@@ -4,7 +4,7 @@ from enum import Enum
 import factory
 import factory.fuzzy
 
-from app.models import Race, Team, User
+from app.models import Race, StrategicPlanning, Team, User
 
 
 class UserFactory(factory.Factory):
@@ -52,5 +52,40 @@ class RaceFactory(factory.Factory):
         length=40, chars=string.ascii_letters, prefix=''
     )
     observations = factory.fuzzy.FuzzyText(
+        length=50, chars=string.ascii_letters, prefix=''
+    )
+
+
+class StrategicPlanningFactory(factory.Factory):
+    class Meta:
+        model = StrategicPlanning
+
+    id = factory.Sequence(lambda n: n)
+
+    mission = factory.fuzzy.FuzzyText(
+        length=50, chars=string.ascii_letters, prefix=''
+    )
+    vision = factory.fuzzy.FuzzyText(
+        length=50, chars=string.ascii_letters, prefix=''
+    )
+    values = factory.fuzzy.FuzzyText(
+        length=50, chars=string.ascii_letters, prefix=''
+    )
+    strategic_objectives = factory.fuzzy.FuzzyText(
+        length=50, chars=string.ascii_letters, prefix=''
+    )
+    immediate_objectives = factory.fuzzy.FuzzyText(
+        length=50, chars=string.ascii_letters, prefix=''
+    )
+    strengths = factory.fuzzy.FuzzyText(
+        length=50, chars=string.ascii_letters, prefix=''
+    )
+    weaknesses = factory.fuzzy.FuzzyText(
+        length=50, chars=string.ascii_letters, prefix=''
+    )
+    opportunities = factory.fuzzy.FuzzyText(
+        length=50, chars=string.ascii_letters, prefix=''
+    )
+    threats = factory.fuzzy.FuzzyText(
         length=50, chars=string.ascii_letters, prefix=''
     )
