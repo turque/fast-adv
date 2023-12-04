@@ -89,16 +89,17 @@ atributos
 
 regras de négócio
 
-- [ ] um equipamento pertece apenas a um atleta
-- [ ] um equipamento pode ser utilizado em uma ou mais provas
+- [ ] um equipamento pode ser individual ou de time
+- [ ] qualquer membro do time pode inserir itens na lista de equipamentos da prova
 
 atributos
 
 - nome
 - quantidade
 - obrigatório
-- características
-- situação
+- observaçao
+- tipo [individual, time]
+- modalidade [geral, mtb, trek, kayak, 1 socorros, outros, personalizada]
 
 ### alimentos
 
