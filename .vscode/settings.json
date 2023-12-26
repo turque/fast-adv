@@ -2,5 +2,10 @@
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter"
     },
-    "python.defaultInterpreterPath": "/home/arnaldo/.cache/pypoetry/virtualenvs"
+    "python.defaultInterpreterPath": "/home/arnaldo/.cache/pypoetry/virtualenvs",
+    "python.testing.pytestArgs": [
+        "backend"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }
