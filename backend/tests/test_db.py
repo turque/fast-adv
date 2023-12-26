@@ -15,11 +15,9 @@ def test_create_user(session):
     assert user.name == 'alice'
 
 
-def test_create_team(session, user: User):
+def test_create_team(session, user: User, race: Race):
     team = Team(
-        name='Time1',
-        team_members=4,
-        owner_id=user.id,
+        name='Time1', team_members=4, owner_id=user.id, race_id=race.id
     )
 
     session.add(team)

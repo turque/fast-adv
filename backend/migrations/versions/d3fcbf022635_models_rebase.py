@@ -1,8 +1,8 @@
 """models rebase
 
-Revision ID: 919f1ffaa8f8
+Revision ID: d3fcbf022635
 Revises: dbe4fab30879
-Create Date: 2023-12-25 14:29:13.081605
+Create Date: 2023-12-26 15:40:55.763945
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '919f1ffaa8f8'
+revision: str = 'd3fcbf022635'
 down_revision: Union[str, None] = 'dbe4fab30879'
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -70,15 +70,9 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_equipamentsathlete_id'), 'equipamentsathlete', ['id'], unique=False)
-    op.add_column('race', sa.Column('owner', sa.Integer(), nullable=False))
-    op.drop_constraint(None, 'race', type_='foreignkey')
-    op.create_foreign_key(None, 'race', 'user', ['owner'], ['id'])
-    op.drop_column('race', 'user_id')
     op.add_column('team', sa.Column('logo', sa.String(), nullable=True))
     op.add_column('team', sa.Column('race_id', sa.Integer(), nullable=False))
-    op.drop_constraint(None, 'team', type_='foreignkey')
     op.create_foreign_key(None, 'team', 'race', ['race_id'], ['id'])
-    op.drop_column('team', 'owner_id')
     op.add_column('user', sa.Column('is_admin', sa.Boolean(), nullable=True))
     op.alter_column('user', 'password',
                existing_type=sa.VARCHAR(),
@@ -92,15 +86,9 @@ def downgrade() -> None:
                existing_type=sa.VARCHAR(),
                nullable=False)
     op.drop_column('user', 'is_admin')
-    op.add_column('team', sa.Column('owner_id', sa.INTEGER(), nullable=False))
     op.drop_constraint(None, 'team', type_='foreignkey')
-    op.create_foreign_key(None, 'team', 'user', ['owner_id'], ['id'])
     op.drop_column('team', 'race_id')
     op.drop_column('team', 'logo')
-    op.add_column('race', sa.Column('user_id', sa.INTEGER(), nullable=False))
-    op.drop_constraint(None, 'race', type_='foreignkey')
-    op.create_foreign_key(None, 'race', 'user', ['user_id'], ['id'])
-    op.drop_column('race', 'owner')
     op.drop_index(op.f('ix_equipamentsathlete_id'), table_name='equipamentsathlete')
     op.drop_table('equipamentsathlete')
     op.drop_index(op.f('ix_timeline_id'), table_name='timeline')

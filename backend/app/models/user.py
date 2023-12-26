@@ -7,6 +7,7 @@ from app.db.base_class import Base
 if TYPE_CHECKING:
     from .invite import Invite  # noqa: F401
     from .race import Race  # noqa: F401
+    from .team import Team  # noqa: F401
 
 
 class User(Base):
@@ -21,5 +22,14 @@ class User(Base):
         back_populates='user', cascade='all, delete-orphan'
     )
     races: Mapped[list['Race']] = relationship(
+        back_populates='user', cascade='all, delete-orphan'
+    )
+    invites: Mapped[list['Invite']] = relationship(
+        back_populates='user', cascade='all, delete-orphan'
+    )
+    races: Mapped[list['Race']] = relationship(
+        back_populates='user', cascade='all, delete-orphan'
+    )
+    teams: Mapped[list['Team']] = relationship(
         back_populates='user', cascade='all, delete-orphan'
     )
