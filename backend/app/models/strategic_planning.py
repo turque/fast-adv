@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
 
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base_class import Base
 
@@ -25,5 +25,3 @@ class StrategicPlanning(Base):
 
     race_id: Mapped[int] = mapped_column(ForeignKey('race.id'))
     user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
-
-    race: Mapped['Race'] = relationship(back_populates='strategic_planning')

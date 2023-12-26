@@ -6,14 +6,12 @@ from sqlalchemy.orm import Mapped, mapped_column
 from app.db.base_class import Base
 
 if TYPE_CHECKING:
+    from .race import Race  # noqa: F401
     from .user import User  # noqa: F401
 
 
-class Team(Base):
+class TeamRace(Base):
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
 
-    name: Mapped[str] = mapped_column(nullable=False, index=True)
-    team_members: Mapped[int] = mapped_column(nullable=False)
-    logo: Mapped[str] = mapped_column(nullable=True)
-
+    user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
     race_id: Mapped[int] = mapped_column(ForeignKey('race.id'))
