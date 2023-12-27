@@ -1,10 +1,8 @@
+from datetime import time
 from typing import TYPE_CHECKING
 
-from datetime import time
-
-from sqlalchemy import Enum, ForeignKey
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy.types import Time
 
 from app.db.base_class import Base
 
@@ -20,7 +18,11 @@ class TimeLine(Base):
     estimated_time: Mapped[time] = mapped_column(nullable=True)
     observations: Mapped[str] = mapped_column(nullable=True)
 
-    previous_stage: Mapped[int] = mapped_column(ForeignKey('timeline.id'), nullable=True)
-    next_stage: Mapped[int] = mapped_column(ForeignKey('timeline.id'), nullable=True)
+    previous_stage: Mapped[int] = mapped_column(
+        ForeignKey('timeline.id'), nullable=True
+    )
+    next_stage: Mapped[int] = mapped_column(
+        ForeignKey('timeline.id'), nullable=True
+    )
 
     race_id: Mapped[int] = mapped_column(ForeignKey('race.id'))

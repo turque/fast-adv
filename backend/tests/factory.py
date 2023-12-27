@@ -4,7 +4,7 @@ from enum import Enum
 import factory
 import factory.fuzzy
 
-from app.models import Race, StrategicPlanning, Team, User, Equipaments
+from app.models import Equipaments, Race, StrategicPlanning, Team, User
 from app.models.enums import ModalityEnun
 
 

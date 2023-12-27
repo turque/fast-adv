@@ -10,11 +10,11 @@ from app.db.session import get_session
 from app.main import app
 
 from .factory import (
+    EquipamentsFactory,
     RaceFactory,
     StrategicPlanningFactory,
     TeamFactory,
     UserFactory,
-    EquipamentsFactory,
 )
 
 
@@ -85,7 +85,7 @@ def team(session, user, race):
     team = TeamFactory(
         owner_id=user.id,
         race_id=race.id,
-        )
+    )
 
     session.add(team)
 

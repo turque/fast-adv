@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 # TODO migrate to CRUD format
 
+
 class TeamSchema(BaseModel):
     name: str
     team_members: int

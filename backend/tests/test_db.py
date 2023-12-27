@@ -1,4 +1,4 @@
-from datetime import datetime, time
+from datetime import datetime
 
 from sqlalchemy import select
 
@@ -109,9 +109,7 @@ def test_create_equipaments(session, race: models.Race):
     session.refresh(equipaments)
 
     query = session.scalar(
-        select(models.Equipaments).where(
-            models.Equipaments.race_id == race.id
-        )
+        select(models.Equipaments).where(models.Equipaments.race_id == race.id)
     )
 
     assert query == equipaments
@@ -130,15 +128,15 @@ def test_create_fugleman(session, race: models.Race):
     session.refresh(fugleman)
 
     query = session.scalar(
-        select(models.Fugleman).where(
-            models.Fugleman.race_id == race.id
-        )
+        select(models.Fugleman).where(models.Fugleman.race_id == race.id)
     )
 
     assert query == fugleman
 
 
-def test_create_strategic_planning(session, user: models.User, race: models.Race):
+def test_create_strategic_planning(
+    session, user: models.User, race: models.Race
+):
     strategic_planning = models.StrategicPlanning(
         mission='mission',
         vision='vision',
@@ -149,7 +147,6 @@ def test_create_strategic_planning(session, user: models.User, race: models.Race
         weaknesses='weaknesses',
         opportunities='opportunities',
         threats='threats',
-
         race_id=race.id,
         user_id=user.id,
     )
@@ -180,7 +177,7 @@ def test_create_user_race(session, user: models.User, race: models.Race):
     query = session.scalar(
         select(models.TeamRace).where(
             models.TeamRace.user_id == user.id,
-            models.TeamRace.race_id == race.id
+            models.TeamRace.race_id == race.id,
         )
     )
 
@@ -194,7 +191,7 @@ def test_create_time_line(session, race: models.Race):
         estimated_time=datetime.now().time(),
         observations='observations',
         previous_stage=None,
-        next_stage=None,        
+        next_stage=None,
         race_id=race.id,
     )
 
@@ -203,9 +200,7 @@ def test_create_time_line(session, race: models.Race):
     session.refresh(user_race)
 
     query = session.scalar(
-        select(models.TimeLine).where(
-            models.TimeLine.race_id == race.id
-        )
+        select(models.TimeLine).where(models.TimeLine.race_id == race.id)
     )
 
     assert query == user_race

@@ -6,7 +6,7 @@ def test_create_team(client, token, race):
             'name': 'Time1',
             'team_members': 2,
             'race_id': race.id,
-            'logo': 'null'
+            'logo': 'null',
         },
     )
 
@@ -30,7 +30,7 @@ def test_get_user_teams(client, token, team, race):
                 'id': team.id,
                 'name': team.name,
                 'team_members': team.team_members,
-                'race_id': race.id
+                'race_id': race.id,
             }
         ]
     }

@@ -24,7 +24,7 @@ def create_team(
         name=team.name,
         team_members=team.team_members,
         owner_id=user.id,
-        race_id=team.race_id
+        race_id=team.race_id,
     )
     db.add(db_team)
     db.commit()
