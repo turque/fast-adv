@@ -24,12 +24,6 @@ class User(Base):
     races: Mapped[list['Race']] = relationship(
         back_populates='user', cascade='all, delete-orphan'
     )
-    invites: Mapped[list['Invite']] = relationship(
-        back_populates='user', cascade='all, delete-orphan'
-    )
-    races: Mapped[list['Race']] = relationship(
-        back_populates='user', cascade='all, delete-orphan'
-    )
     teams: Mapped[list['Team']] = relationship(
         back_populates='user', cascade='all, delete-orphan'
     )

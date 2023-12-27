@@ -8,8 +8,6 @@ from sqlalchemy.types import Time
 
 from app.db.base_class import Base
 
-from .enums import ModalityEnun
-
 if TYPE_CHECKING:
     from .race import Race  # noqa: F401
 
@@ -22,7 +20,7 @@ class TimeLine(Base):
     estimated_time: Mapped[time] = mapped_column(nullable=True)
     observations: Mapped[str] = mapped_column(nullable=True)
 
-    previous_stage: Mapped[int] = mapped_column(ForeignKey('timeline.id'))
-    next_stage: Mapped[int] = mapped_column(ForeignKey('timeline.id'))
+    previous_stage: Mapped[int] = mapped_column(ForeignKey('timeline.id'), nullable=True)
+    next_stage: Mapped[int] = mapped_column(ForeignKey('timeline.id'), nullable=True)
 
     race_id: Mapped[int] = mapped_column(ForeignKey('race.id'))

@@ -17,8 +17,8 @@ class Invite(Base):
     token: Mapped[str] = mapped_column(nullable=False)
     name: Mapped[str] = mapped_column(nullable=False)
     email: Mapped[str] = mapped_column(nullable=False)
-    team: Mapped[int] = mapped_column(nullable=False)
-    race: Mapped[int] = mapped_column(nullable=False)
+    team_id: Mapped[int] = mapped_column(nullable=False)
+    race_id: Mapped[int] = mapped_column(nullable=False)
     user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
     create_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
