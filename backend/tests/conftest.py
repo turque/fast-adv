@@ -14,6 +14,7 @@ from .factory import (
     StrategicPlanningFactory,
     TeamFactory,
     UserFactory,
+    EquipamentsFactory,
 )
 
 
@@ -80,9 +81,11 @@ def token(client, user):
 
 
 @pytest.fixture
-def team(session, user):
-    owner_id = user.id
-    team = TeamFactory(owner_id=owner_id)
+def team(session, user, race):
+    team = TeamFactory(
+        owner_id=user.id,
+        race_id=race.id,
+        )
 
     session.add(team)
 
@@ -130,3 +133,16 @@ def strategic_planning(session, user, race):
     session.refresh(strategic)
 
     yield strategic
+
+
+@pytest.fixture
+def equipament(session, race):
+    race_id = race.id
+    equipament = EquipamentsFactory(race_id=race_id)
+
+    session.add(equipament)
+
+    session.commit()
+    session.refresh(equipament)
+
+    yield equipament

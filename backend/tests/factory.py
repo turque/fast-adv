@@ -4,7 +4,8 @@ from enum import Enum
 import factory
 import factory.fuzzy
 
-from app.models import Race, StrategicPlanning, Team, User
+from app.models import Race, StrategicPlanning, Team, User, Equipaments
+from app.models.enums import ModalityEnun
 
 
 class UserFactory(factory.Factory):
@@ -31,6 +32,7 @@ class TeamFactory(factory.Factory):
     name = factory.LazyAttribute(lambda obj: f'team{obj.id}')
     team_members = 2
     owner_id = 1
+    race_id = 1
 
 
 class RaceFactory(factory.Factory):
@@ -89,3 +91,12 @@ class StrategicPlanningFactory(factory.Factory):
     threats = factory.fuzzy.FuzzyText(
         length=50, chars=string.ascii_letters, prefix=''
     )
+
+
+class EquipamentsFactory(factory.Factory):
+    class Meta:
+        model = Equipaments
+
+    id = factory.Sequence(lambda n: n)
+    quantity = factory.fuzzy.FuzzyInteger(1, 4)
+    modality = factory.fuzzy.FuzzyChoice(ModalityEnun)
