@@ -24,8 +24,9 @@ def create_invite(
     invite: InviteSchema,
     db: Session = Depends(get_session),
 ):
+    # TODO chage to CRUD format
     team = db.scalar(
-        select(Team).where(Team.id == invite.team, Team.owner_id == user.id)
+        select(Team).where(Team.id == invite.team_id, Team.owner_id == user.id)
     )
 
     if not team:
@@ -34,7 +35,7 @@ def create_invite(
         )
 
     race = db.scalar(
-        select(Race).where(Race.id == invite.race, Team.owner_id == user.id)
+        select(Race).where(Race.id == invite.race_id, Team.owner_id == user.id)
     )
 
     if not race:

@@ -12,15 +12,15 @@ def test_create_invite(session, client, token, team, race, mocker):
         json={
             'name': 'guest1',
             'email': 'guest1@mail.com',
-            'team': team.id,
-            'race': race.id,
+            'team_id': team.id,
+            'race_id': race.id,
         },
     )
 
     invite = session.scalar(select(Invite))
 
-    assert invite.sent_at is not None
     assert response.status_code == 201
+    assert invite.sent_at is not None
 
 
 def test_create_invite_not_sent(session, client, token, team, race, mocker):
@@ -32,8 +32,8 @@ def test_create_invite_not_sent(session, client, token, team, race, mocker):
         json={
             'name': 'guest1',
             'email': 'guest1@mail.com',
-            'team': team.id,
-            'race': race.id,
+            'team_id': team.id,
+            'race_id': race.id,
         },
     )
 
@@ -67,8 +67,8 @@ def test_create_invite_with_invalid_team_id(client, token, other_team, race):
         json={
             'name': 'guest1',
             'email': 'guest1@mail.com',
-            'team': other_team.id,
-            'race': race.id,
+            'team_id': other_team.id,
+            'race_id': race.id,
         },
     )
 
