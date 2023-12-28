@@ -30,4 +30,6 @@ FROM builder AS production
 
 COPY . .
 
+ENTRYPOINT [ "./scripts/pre-init.sh" ]
+
 CMD [ "poetry", "run", "uvicorn", "--host", "0.0.0.0", "app.main:app" ]

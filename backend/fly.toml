@@ -14,7 +14,6 @@ primary_region = "gru"
 [deploy]
   strategy = "rolling"
   max_unavailable = 1.0
-  release_command = "task migrate"
 
 [env]
   ALGORITHM='HS256'
