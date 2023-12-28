@@ -6,17 +6,6 @@
 app = "fast-adv-api"
 primary_region = "gru"
 
-lease:
-  candidate: ${FLY_REGION == PRIMARY_REGION}
-  promote: true
-
-exec:
-  - cmd: "rails db:migrate"
-    if-candidate: true
-
-  - cmd: "rails server"
-
-
 [build]
 
 [build.args]
