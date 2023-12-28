@@ -6,6 +6,17 @@
 app = "fast-adv-api"
 primary_region = "gru"
 
+lease:
+  candidate: ${FLY_REGION == PRIMARY_REGION}
+  promote: true
+
+exec:
+  - cmd: "rails db:migrate"
+    if-candidate: true
+
+  - cmd: "rails server"
+
+
 [build]
 
 [build.args]
@@ -14,6 +25,7 @@ primary_region = "gru"
 [deploy]
   strategy = "rolling"
   max_unavailable = 1.0
+  release_command = "task migrate"
 
 [env]
   ALGORITHM='HS256'
