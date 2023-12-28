@@ -30,6 +30,7 @@ FROM builder AS production
 
 COPY . .
 
+RUN chmod +x ./scripts/pre-init.sh
 ENTRYPOINT [ "./scripts/pre-init.sh" ]
 
 CMD [ "poetry", "run", "uvicorn", "--host", "0.0.0.0", "app.main:app" ]
