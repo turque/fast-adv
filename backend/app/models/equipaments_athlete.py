@@ -6,8 +6,8 @@ from sqlalchemy.orm import Mapped, mapped_column
 from app.db.base_class import Base
 
 if TYPE_CHECKING:
+    from .athlete import Athlete  # noqa: F401
     from .equipaments import Equipaments  # noqa: F401
-    from .user import User  # noqa: F401
 
 
 class EquipamentsAthlete(Base):
@@ -17,5 +17,5 @@ class EquipamentsAthlete(Base):
     have: Mapped[bool] = mapped_column(nullable=True, default=True)
     ready: Mapped[bool] = mapped_column(nullable=True, default=True)
 
-    user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
+    athlete_id: Mapped[int] = mapped_column(ForeignKey('athlete.id'))
     equipament_id: Mapped[int] = mapped_column(ForeignKey('equipaments.id'))

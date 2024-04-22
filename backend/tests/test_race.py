@@ -1,4 +1,4 @@
-def test_create_race_with_minimal_fields(client, user, token, race):
+def test_create_race_with_minimal_fields(client, athlete, token, race):
     payload = expected = {
         'name': race.name,
         'place': None,
@@ -22,7 +22,7 @@ def test_create_race_with_minimal_fields(client, user, token, race):
     assert response.json() == expected
 
 
-def test_create_race_with_all_fields(client, user, token, race):
+def test_create_race_with_all_fields(client, athlete, token, race):
     payload = expected = {
         'name': race.name,
         'place': race.place,
@@ -46,7 +46,7 @@ def test_create_race_with_all_fields(client, user, token, race):
     assert response.json() == expected
 
 
-def test_update_race(client, user, token, race):
+def test_update_race(client, athlete, token, race):
     payload = {
         'name': 'altered name',
         'place': None,

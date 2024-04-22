@@ -28,12 +28,12 @@ def test_get_strategics_by_race(client, token, race, strategic_planning):
     assert response.status_code == 200
 
 
-def test_create_strategic_planning(client, user, token, race):
+def test_create_strategic_planning(client, athlete, token, race):
     expected = payload
     expected.update(
         {
             'race_id': race.id,
-            'user_id': user.id,
+            'athlete_id': athlete.id,
             'id': 1,
         }
     )
@@ -49,11 +49,11 @@ def test_create_strategic_planning(client, user, token, race):
 
 
 def test_try_create_with_strategic_planning_already_registered(
-    client, user, token, race, strategic_planning
+    client, athlete, token, race, strategic_planning
 ):
     expected = {
         'detail': (
-            'User has already registered strategic planning for this race'
+            'Athlete has already registered strategic planning for this race'
         )
     }
     response = client.post(
@@ -67,7 +67,7 @@ def test_try_create_with_strategic_planning_already_registered(
 
 
 def test_update_strategic_planning(
-    client, user, token, race, strategic_planning
+    client, athlete, token, race, strategic_planning
 ):
     payload = schemas.StrategicPlanning.model_validate(
         strategic_planning

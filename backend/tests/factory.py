@@ -4,13 +4,13 @@ from enum import Enum
 import factory
 import factory.fuzzy
 
-from app.models import Equipaments, Race, StrategicPlanning, Team, User
+from app.models import Athlete, Equipaments, Race, StrategicPlanning, Team
 from app.models.enums import ModalityEnun
 
 
-class UserFactory(factory.Factory):
+class AthleteFactory(factory.Factory):
     class Meta:
-        model = User
+        model = Athlete
 
     id = factory.Sequence(lambda n: n)
     name = factory.LazyAttribute(lambda obj: f'test{obj.id}')

@@ -10,20 +10,20 @@ from app.schemas.race import RaceCreate, RaceUpdate
 
 class CRUDRace(CRUDBase[Race, RaceCreate, RaceUpdate]):
     def create(
-        self, db: Session, *, race_in: RaceCreate, user_id: int
+        self, db: Session, *, race_in: RaceCreate, athlete_id: int
     ) -> Race:
-        db_race = Race(**race_in.model_dump(), user_id=user_id)
+        db_race = Race(**race_in.model_dump(), athlete_id=athlete_id)
         db.add(db_race)
         db.commit()
         db.refresh(db_race)
         return db_race
 
-    def get_multi_by_user(
-        self, db: Session, *, user_id: int, skip: int = 0, limit: int = 100
+    def get_multi_by_athlete(
+        self, db: Session, *, athlete_id: int, skip: int = 0, limit: int = 100
     ) -> List[Race]:
         return db.scalars(
             select(Race)
-            .where(Race.user_id == user_id)
+            .where(Race.athlete_id == athlete_id)
             .offset(skip)
             .limit(limit)
         ).all()

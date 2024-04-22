@@ -7,7 +7,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db.base_class import Base
 
 if TYPE_CHECKING:
-    from .user import User  # noqa: F401
+    from .athlete import Athlete  # noqa: F401
 
 
 class Race(Base):
@@ -24,6 +24,6 @@ class Race(Base):
     race_description: Mapped[str] = mapped_column(nullable=True)
     place_description: Mapped[str] = mapped_column(nullable=True)
     observations: Mapped[str] = mapped_column(nullable=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
+    athlete_id: Mapped[int] = mapped_column(ForeignKey('athlete.id'))
 
-    user: Mapped['User'] = relationship(back_populates='races')
+    athlete: Mapped['Athlete'] = relationship(back_populates='races')

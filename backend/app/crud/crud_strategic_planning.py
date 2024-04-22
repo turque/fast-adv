@@ -18,11 +18,11 @@ class CRUDStrategicPlanning(
         db: Session,
         *,
         strategic_in: StrategicPlanningCreate,
-        user_id: int,
+        athlete_id: int,
         race_id: int
     ) -> StrategicPlanning:
         db_strategic = StrategicPlanning(
-            **strategic_in.model_dump(), user_id=user_id, race_id=race_id
+            **strategic_in.model_dump(), athlete_id=athlete_id, race_id=race_id
         )
         db.add(db_strategic)
         db.commit()
@@ -39,11 +39,11 @@ class CRUDStrategicPlanning(
             .limit(limit)
         ).all()
 
-    def get_by_user(
+    def get_by_athlete(
         self,
         db: Session,
         race_id: int,
-        user_id: int,
+        athlete_id: int,
         skip: int = 0,
         limit: int = 100,
     ) -> StrategicPlanning:
@@ -51,7 +51,7 @@ class CRUDStrategicPlanning(
             select(StrategicPlanning)
             .where(
                 StrategicPlanning.race_id == race_id,
-                StrategicPlanning.user_id == user_id,
+                StrategicPlanning.athlete_id == athlete_id,
             )
             .offset(skip)
             .limit(limit)
