@@ -5,34 +5,38 @@ from sqlalchemy import select
 from app import models
 
 
-def test_create_user(session):
-    new_user = models.User(name='alice', password='secret', email='teste@test')
-    session.add(new_user)
+def test_create_athlete(session):
+    new_athlete = models.Athlete(
+        name='alice', password='secret', email='teste@test'
+    )
+    session.add(new_athlete)
     session.commit()
 
-    user = session.scalar(
-        select(models.User).where(models.User.name == 'alice')
+    athlete = session.scalar(
+        select(models.Athlete).where(models.Athlete.name == 'alice')
     )
 
-    assert user.name == 'alice'
+    assert athlete.name == 'alice'
 
 
-def test_create_team(session, user: models.User, race: models.Race):
+def test_create_team(session, athlete: models.Athlete, race: models.Race):
     team = models.Team(
-        name='Time1', team_members=4, owner_id=user.id, race_id=race.id
+        name='Time1', team_members=4, owner_id=athlete.id, race_id=race.id
     )
 
     session.add(team)
     session.commit()
     session.refresh(team)
 
-    user = session.scalar(select(models.User).where(models.User.id == user.id))
+    athlete = session.scalar(
+        select(models.Athlete).where(models.Athlete.id == athlete.id)
+    )
 
-    assert team in user.teams
+    assert team in athlete.teams
 
 
 def test_create_invite(
-    session, user: models.User, team: models.Team, race: models.Race
+    session, athlete: models.Athlete, team: models.Team, race: models.Race
 ):
     invite = models.Invite(
         token='123456789abcdef',
@@ -40,19 +44,21 @@ def test_create_invite(
         email='athlete1@email.com',
         team_id=team.id,
         race_id=race.id,
-        user_id=user.id,
+        athlete_id=athlete.id,
     )
 
     session.add(invite)
     session.commit()
     session.refresh(invite)
 
-    user = session.scalar(select(models.User).where(models.User.id == user.id))
+    athlete = session.scalar(
+        select(models.Athlete).where(models.Athlete.id == athlete.id)
+    )
 
-    assert invite in user.invites
+    assert invite in athlete.invites
 
 
-def test_create_race(session, user: models.User):
+def test_create_race(session, athlete: models.Athlete):
     race = models.Race(
         name='Race 1',
         place='anywhere',
@@ -62,25 +68,27 @@ def test_create_race(session, user: models.User):
         race_description='description',
         place_description='description',
         observations='description',
-        user_id=user.id,
+        athlete_id=athlete.id,
     )
     session.add(race)
     session.commit()
     session.refresh(race)
 
-    user = session.scalar(select(models.User).where(models.User.id == user.id))
+    athlete = session.scalar(
+        select(models.Athlete).where(models.Athlete.id == athlete.id)
+    )
 
-    assert race in user.races
+    assert race in athlete.races
 
 
 def test_create_equipaments_athlete(
-    session, user: models.User, equipament: models.Equipaments
+    session, athlete: models.Athlete, equipament: models.Equipaments
 ):
     equipaments_athlete = models.EquipamentsAthlete(
         observations='New equipament',
         have=True,
         ready=False,
-        user_id=user.id,
+        athlete_id=athlete.id,
         equipament_id=equipament.id,
     )
 
@@ -90,7 +98,7 @@ def test_create_equipaments_athlete(
 
     query = session.scalar(
         select(models.EquipamentsAthlete).where(
-            models.EquipamentsAthlete.user_id == user.id
+            models.EquipamentsAthlete.athlete_id == athlete.id
         )
     )
 
@@ -135,7 +143,7 @@ def test_create_fugleman(session, race: models.Race):
 
 
 def test_create_strategic_planning(
-    session, user: models.User, race: models.Race
+    session, athlete: models.Athlete, race: models.Race
 ):
     strategic_planning = models.StrategicPlanning(
         mission='mission',
@@ -148,7 +156,7 @@ def test_create_strategic_planning(
         opportunities='opportunities',
         threats='threats',
         race_id=race.id,
-        user_id=user.id,
+        athlete_id=athlete.id,
     )
 
     session.add(strategic_planning)
@@ -157,35 +165,37 @@ def test_create_strategic_planning(
 
     query = session.scalar(
         select(models.StrategicPlanning).where(
-            models.StrategicPlanning.user_id == user.id
+            models.StrategicPlanning.athlete_id == athlete.id
         )
     )
 
     assert query == strategic_planning
 
 
-def test_create_user_race(session, user: models.User, race: models.Race):
-    user_race = models.TeamRace(
+def test_create_athlete_race(
+    session, athlete: models.Athlete, race: models.Race
+):
+    athlete_race = models.TeamRace(
         race_id=race.id,
-        user_id=user.id,
+        athlete_id=athlete.id,
     )
 
-    session.add(user_race)
+    session.add(athlete_race)
     session.commit()
-    session.refresh(user_race)
+    session.refresh(athlete_race)
 
     query = session.scalar(
         select(models.TeamRace).where(
-            models.TeamRace.user_id == user.id,
+            models.TeamRace.athlete_id == athlete.id,
             models.TeamRace.race_id == race.id,
         )
     )
 
-    assert query == user_race
+    assert query == athlete_race
 
 
 def test_create_time_line(session, race: models.Race):
-    user_race = models.TimeLine(
+    athlete_race = models.TimeLine(
         stage='AT1',
         distance=23,
         estimated_time=datetime.now().time(),
@@ -195,12 +205,12 @@ def test_create_time_line(session, race: models.Race):
         race_id=race.id,
     )
 
-    session.add(user_race)
+    session.add(athlete_race)
     session.commit()
-    session.refresh(user_race)
+    session.refresh(athlete_race)
 
     query = session.scalar(
         select(models.TimeLine).where(models.TimeLine.race_id == race.id)
     )
 
-    assert query == user_race
+    assert query == athlete_race

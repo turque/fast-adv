@@ -1,18 +1,20 @@
 from fastapi import APIRouter
 
 from .endpoints import (
+    athlete,
     auth,
     invites,
     races,
     resources,
     strategic_planning,
     teams,
-    users,
     utils,
 )
 
 api_router = APIRouter()
-api_router.include_router(users.router, prefix='/users', tags=['users'])
+api_router.include_router(
+    athlete.router, prefix='/athletes', tags=['athletes']
+)
 api_router.include_router(auth.router, prefix='/auth', tags=['auth'])
 api_router.include_router(resources.router)
 api_router.include_router(teams.router)

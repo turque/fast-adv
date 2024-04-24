@@ -10,11 +10,11 @@ from app.db.session import get_session
 from app.main import app
 
 from .factory import (
+    AthleteFactory,
     EquipamentsFactory,
     RaceFactory,
     StrategicPlanningFactory,
     TeamFactory,
-    UserFactory,
 )
 
 
@@ -44,46 +44,46 @@ def session():
 
 
 @pytest.fixture
-def user(session):
+def athlete(session):
     password = 'testtest'
-    user = UserFactory(password=get_password_hash(password))
+    athlete = AthleteFactory(password=get_password_hash(password))
 
-    session.add(user)
+    session.add(athlete)
     session.commit()
-    session.refresh(user)
+    session.refresh(athlete)
 
-    user.clean_password = 'testtest'
+    athlete.clean_password = 'testtest'
 
-    yield user
+    yield athlete
 
 
 @pytest.fixture
-def other_user(session):
+def other_athlete(session):
     password = 'testtest'
-    user = UserFactory(password=get_password_hash(password))
+    athlete = AthleteFactory(password=get_password_hash(password))
 
-    session.add(user)
+    session.add(athlete)
     session.commit()
-    session.refresh(user)
+    session.refresh(athlete)
 
-    user.clean_password = 'testtest'
+    athlete.clean_password = 'testtest'
 
-    yield user
+    yield athlete
 
 
 @pytest.fixture
-def token(client, user):
+def token(client, athlete):
     response = client.post(
         'api/v1/auth/token',
-        data={'username': user.email, 'password': user.clean_password},
+        data={'username': athlete.email, 'password': athlete.clean_password},
     )
     return response.json()['access_token']
 
 
 @pytest.fixture
-def team(session, user, race):
+def team(session, athlete, race):
     team = TeamFactory(
-        owner_id=user.id,
+        owner_id=athlete.id,
         race_id=race.id,
     )
 
@@ -96,8 +96,8 @@ def team(session, user, race):
 
 
 @pytest.fixture
-def other_team(session, other_user):
-    owner_id = other_user.id
+def other_team(session, other_athlete):
+    owner_id = other_athlete.id
     team = TeamFactory(owner_id=owner_id)
 
     session.add(team)
@@ -109,9 +109,9 @@ def other_team(session, other_user):
 
 
 @pytest.fixture
-def race(session, user):
-    user_id = user.id
-    race = RaceFactory(user_id=user_id)
+def race(session, athlete):
+    athlete_id = athlete.id
+    race = RaceFactory(athlete_id=athlete_id)
 
     session.add(race)
 
@@ -122,10 +122,12 @@ def race(session, user):
 
 
 @pytest.fixture
-def strategic_planning(session, user, race):
-    user_id = user.id
+def strategic_planning(session, athlete, race):
+    athlete_id = athlete.id
     race_id = race.id
-    strategic = StrategicPlanningFactory(user_id=user_id, race_id=race_id)
+    strategic = StrategicPlanningFactory(
+        athlete_id=athlete_id, race_id=race_id
+    )
 
     session.add(strategic)
 

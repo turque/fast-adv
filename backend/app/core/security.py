@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 
 from app.core.settings import settings
 from app.db.session import get_session
-from app.models import User
+from app.models import Athlete
 from app.schemas import TokenData
 
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
@@ -36,7 +36,7 @@ def verify_password(plain_password: str, hashed_password: str):
     return pwd_context.verify(plain_password, hashed_password)
 
 
-async def get_current_user(
+async def get_current_athlete(
     session: Session = Depends(get_session),
     token: str = Depends(oauth2_scheme),
 ):
@@ -57,14 +57,14 @@ async def get_current_user(
     except JWTError:
         raise credentials_exception
 
-    user = session.scalar(
-        select(User).where(User.email == token_data.username)
+    athlete = session.scalar(
+        select(Athlete).where(Athlete.email == token_data.username)
     )
 
-    if user is None:
+    if athlete is None:
         raise credentials_exception
 
-    return user
+    return athlete
 
 
 def create_invite_token(data: dict):

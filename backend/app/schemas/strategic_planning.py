@@ -26,7 +26,7 @@ class StrategicPlanningUpdate(StrategicPlanningBase):
 class StrategicPlanningInDBBase(StrategicPlanningBase):
     id: int
     race_id: int
-    user_id: int
+    athlete_id: int
 
     class Config:
         from_attributes = True

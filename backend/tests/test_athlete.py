@@ -1,9 +1,9 @@
-from app.schemas import UserPublic
+from app.schemas import AthletePublic
 
 
-def test_create_user(client, user, token):
+def test_create_athlete(client, athlete, token):
     response = client.post(
-        'api/v1/users/',
+        'api/v1/athletes/',
         headers={'Authorization': f'Bearer {token}'},
         json={
             'name': 'alice',
@@ -15,18 +15,18 @@ def test_create_user(client, user, token):
     assert response.json() == {
         'name': 'alice',
         'email': 'alice@example.com',
-        'id': user.id + 1,
+        'id': athlete.id + 1,
     }
 
 
-def test_create_user_already_registered(client, user, token):
+def test_create_athlete_already_registered(client, athlete, token):
     response = client.post(
-        'api/v1/users/',
+        'api/v1/athletes/',
         headers={'Authorization': f'Bearer {token}'},
         json={
-            'name': user.name,
-            'email': user.email,
-            'password': user.password,
+            'name': athlete.name,
+            'email': athlete.email,
+            'password': athlete.password,
         },
     )
     assert response.status_code == 400
@@ -35,17 +35,17 @@ def test_create_user_already_registered(client, user, token):
     }
 
 
-def test_read_users(client, user, token):
-    user_schema = UserPublic.model_validate(user).model_dump()
+def test_read_athletes(client, athlete, token):
+    athlete_schema = AthletePublic.model_validate(athlete).model_dump()
     response = client.get(
-        'api/v1/users/', headers={'Authorization': f'Bearer {token}'}
+        'api/v1/athletes/', headers={'Authorization': f'Bearer {token}'}
     )
-    assert response.json() == {'users': [user_schema]}
+    assert response.json() == {'athletes': [athlete_schema]}
 
 
-def test_update_user(client, user, token):
+def test_update_athlete(client, athlete, token):
     response = client.put(
-        f'api/v1/users/{user.id}',
+        f'api/v1/athletes/{athlete.id}',
         headers={'Authorization': f'Bearer {token}'},
         json={
             'name': 'bob',
@@ -57,13 +57,13 @@ def test_update_user(client, user, token):
     assert response.json() == {
         'name': 'bob',
         'email': 'bob@example.com',
-        'id': user.id,
+        'id': athlete.id,
     }
 
 
-def test_update_user_with_wrong_user(client, other_user, token):
+def test_update_athlete_with_wrong_user(client, other_athlete, token):
     response = client.put(
-        f'api/v1/users/{other_user.id}',
+        f'api/v1/athletes/{other_athlete.id}',
         headers={'Authorization': f'Bearer {token}'},
         json={
             'name': 'bob',
@@ -75,9 +75,9 @@ def test_update_user_with_wrong_user(client, other_user, token):
     assert response.json() == {'detail': 'Not enough permissions'}
 
 
-def test_update_user_not_found(client):
+def test_update_athlete_not_found(client):
     response = client.put(
-        'api/v1/users/1',
+        'api/v1/athletes/1',
         json={
             'name': 'bob',
             'email': 'bob@example.com',
@@ -90,25 +90,26 @@ def test_update_user_not_found(client):
     }
 
 
-def test_delete_user(client, user, token):
+def test_delete_athlete(client, athlete, token):
     response = client.delete(
-        f'api/v1/users/{user.id}', headers={'Authorization': f'Bearer {token}'}
+        f'api/v1/athletes/{athlete.id}',
+        headers={'Authorization': f'Bearer {token}'},
     )
 
     assert response.status_code == 200
-    assert response.json() == {'detail': 'User deleted'}
+    assert response.json() == {'detail': 'Athlete deleted'}
 
 
-def test_delete_user_not_found(client):
-    response = client.delete('api/v1/users/1')
+def test_delete_athlete_not_found(client):
+    response = client.delete('api/v1/athletes/1')
 
     assert response.status_code == 401
     assert response.json() == {'detail': 'Not authenticated'}
 
 
-def test_delete_user_wrong_user(client, other_user, token):
+def test_delete_athlete_wrong_user(client, other_athlete, token):
     response = client.delete(
-        f'api/v1/users/{other_user.id}',
+        f'api/v1/athletes/{other_athlete.id}',
         headers={'Authorization': f'Bearer {token}'},
     )
     assert response.status_code == 400

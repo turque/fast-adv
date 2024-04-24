@@ -18,7 +18,7 @@ def test_create_team(client, token, race):
     }
 
 
-def test_get_user_teams(client, token, team, race):
+def test_get_athlete_teams(client, token, team, race):
     response = client.get(
         'api/v1/teams/',
         headers={'Authorization': f'Bearer {token}'},
