@@ -50,7 +50,9 @@ def create_team(
     """
     Create new race.
     """
-    race = crud.race.create(db=db, race_in=race_in, athlete=current_athlete.id)
+    race = crud.race.create(
+        db=db, race_in=race_in, athlete_id=current_athlete.id
+    )
     return race
 
 

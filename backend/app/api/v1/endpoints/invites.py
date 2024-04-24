@@ -50,7 +50,9 @@ def create_invite(
     token = uuid.uuid4()
 
     db_inviter = Invite(
-        **invite.model_dump(mode='json'), token=str(token), athlete=athlete.id
+        **invite.model_dump(mode='json'),
+        token=str(token),
+        athlete_id=athlete.id,
     )
 
     db.add(db_inviter)

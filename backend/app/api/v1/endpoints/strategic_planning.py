@@ -40,7 +40,7 @@ def create_strategic_planning(
     """
     Create new race strategic planning.
     """
-    db_strategic = crud.strategic.athlete(
+    db_strategic = crud.strategic.get_by_athlete(
         db=db, race_id=race_id, athlete_id=current_athlete.id
     )
 

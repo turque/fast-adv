@@ -52,9 +52,7 @@ def test_try_create_with_strategic_planning_already_registered(
     client, athlete, token, race, strategic_planning
 ):
     expected = {
-        'detail': (
-            'Athlete has already registered strategic planning for this race'
-        )
+        'detail': ('Athlete has already registered strategic planning')
     }
     response = client.post(
         f'api/v1/strategic/?race_id={race.id}',

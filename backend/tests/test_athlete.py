@@ -97,7 +97,7 @@ def test_delete_athlete(client, athlete, token):
     )
 
     assert response.status_code == 200
-    assert response.json() == {'detail': 'User deleted'}
+    assert response.json() == {'detail': 'Athlete deleted'}
 
 
 def test_delete_athlete_not_found(client):
