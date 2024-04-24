@@ -1,13 +1,17 @@
-name: Fly Deploy
-run-name: Deploy to Fly.io by @${{ github.actor }}
+name: Fly Deploy - API
+run-name: Deploy api to Fly.io by @${{ github.actor }}
 
 on:
   push:
     branches:
       - main
+    paths:
+      - 'backend/**'
   pull_request:
     branches:
       - main
+    paths:
+      - 'backend/**'
 
 jobs:
   test-backend:
