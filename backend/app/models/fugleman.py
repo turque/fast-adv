@@ -16,4 +16,4 @@ class Fugleman(Base):
     email: Mapped[str] = mapped_column(nullable=True, index=True)
     phone: Mapped[str] = mapped_column(nullable=True)
 
-    race_id: Mapped['Race'] = mapped_column(ForeignKey('race.id'))
+    race_id: Mapped[int] = mapped_column(ForeignKey('race.id'))

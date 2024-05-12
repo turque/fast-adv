@@ -17,4 +17,4 @@ class Equipaments(Base):
     quantity: Mapped[int] = mapped_column(nullable=True)
     modality: Mapped[str] = mapped_column(Enum(ModalityEnun))
 
-    race_id: Mapped['Race'] = mapped_column(ForeignKey('race.id'))
+    race_id: Mapped[int] = mapped_column(ForeignKey('race.id'))
