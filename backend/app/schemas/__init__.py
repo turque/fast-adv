@@ -7,15 +7,15 @@ from .strategic_planning import (
     StrategicPlanningCreate,
     StrategicPlanningUpdate,
 )
-from .team import TeamList, TeamPublic, TeamSchema
+from .team import Team, TeamCreate, TeamUpdate
 from .token import Token, TokenData
 
 __all__ = [
     'InviteSchema',
     'Message',
-    'TeamList',
-    'TeamPublic',
-    'TeamSchema',
+    'Team',
+    'TeamCreate',
+    'TeamUpdate',
     'Token',
     'TokenData',
     'AthleteList',

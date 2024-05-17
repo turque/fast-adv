@@ -1,21 +1,35 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
-# TODO migrate to CRUD format
+
+class TeamBase(BaseModel):
+    name: Optional[str]
+    team_members: Optional[int]
+    logo: Optional[str]
+    # owner_id: Optional[int]
+    race_id: Optional[int]
 
 
-class TeamSchema(BaseModel):
+class TeamCreate(TeamBase):
     name: str
-    team_members: int
-    race_id: int
-    logo: str
 
 
-class TeamPublic(BaseModel):
+class TeamUpdate(TeamBase):
+    pass
+
+
+class TeamInDBBase(TeamBase):
     id: int
     name: str
-    team_members: int
-    race_id: int
+
+    class Config:
+        from_attributes = True
 
 
-class TeamList(BaseModel):
-    teams: list[TeamPublic]
+class Team(TeamInDBBase):
+    pass
+
+
+class TeamInDB(TeamInDBBase):
+    pass

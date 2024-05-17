@@ -42,7 +42,7 @@ def read_race_by_id(
 
 
 @router.post('/', response_model=schemas.Race, status_code=201)
-def create_team(
+def create_race(
     race_in: schemas.RaceCreate,
     current_athlete: CurrentAthlete,
     db: Session,

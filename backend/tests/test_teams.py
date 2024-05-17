@@ -1,21 +1,19 @@
-def test_create_team(client, token, race):
-    response = client.post(
-        'api/v1/teams/',
-        headers={'Authorization': f'Bearer {token}'},
-        json={
-            'name': 'Time1',
-            'team_members': 2,
-            'race_id': race.id,
-            'logo': 'null',
-        },
-    )
-
-    assert response.json() == {
-        'id': 1,
+def test_create_team(client, token, race, athlete):
+    payload = expected = {
         'name': 'Time1',
         'team_members': 2,
         'race_id': race.id,
+        'logo': 'null',
     }
+
+    response = client.post(
+        'api/v1/teams/',
+        headers={'Authorization': f'Bearer {token}'},
+        json=payload,
+    )
+
+    expected.update(id=1)
+    assert response.json() == expected
 
 
 def test_get_athlete_teams(client, token, team, race):
@@ -24,13 +22,12 @@ def test_get_athlete_teams(client, token, team, race):
         headers={'Authorization': f'Bearer {token}'},
     )
 
-    assert response.json() == {
-        'teams': [
-            {
-                'id': team.id,
-                'name': team.name,
-                'team_members': team.team_members,
-                'race_id': race.id,
-            }
-        ]
-    }
+    assert response.json() == [
+        {
+            'id': team.id,
+            'name': team.name,
+            'team_members': team.team_members,
+            'logo': None,
+            'race_id': race.id,
+        }
+    ]
