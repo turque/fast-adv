@@ -1,17 +1,9 @@
-function Cards() {
-    return(
-        <div className="provaCard">
-            <div className="provaImg">
-                <picture></picture>
-            </div>
+import {Button} from '@nextui-org/button'; 
 
-            <div className="row provaInfo">
-                <h5>Nome da prova</h5>
-                <p>data da prova</p>
-                <button className="provaDetail">Visualizar</button>
-            </div>
+export default function Cards() {
+    return(
+        <div>
+            <Button>Click me</Button>
         </div>
     )
 }
-
-export default Cards
