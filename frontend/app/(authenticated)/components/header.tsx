@@ -1,9 +1,11 @@
+// 'use client'
+
 import Image from 'next/image'
 import Link from 'next/link';
 import { Disclosure, Menu, MenuButton, Transition, MenuItems, MenuItem, DisclosurePanel, DisclosureButton } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Fragment } from 'react';
-import { UserAvatar } from './avatar';
+import ProfileImage from './ProfileImage';
 
 const navigation = [
   { name: 'Prova', href: '#', current: true },
@@ -29,7 +31,7 @@ export default function Header() {
                     width={38}
                     height={38}
                     alt="Uma rosa dos ventos como logotipo do App"
-                 />
+                 /> 
               </div>
               <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
@@ -65,7 +67,8 @@ export default function Header() {
                   <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">Abra o menu de usuário</span>
-                    <UserAvatar />
+                    
+                    < ProfileImage userId='1' />
                     {/* <Image className='h-10 w-auto rounded-full' src="/img/perfil-roxo.png" width={50} height={50} alt="Imagem de perfil"/> */}
                   </MenuButton>
 
@@ -85,7 +88,7 @@ export default function Header() {
                               href="#"
                               className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             >
-                              Your Profile
+                              Seu Perfil
                             </Link>
                         )} */}
                       </MenuItem>
@@ -95,18 +98,18 @@ export default function Header() {
                             href="#"
                             className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Settings
+                            Configurações
                           </Link>
                         )} */}
                       </MenuItem>
                       <MenuItem>
                         {/* {({ focus }) => (
-                          <Lin
+                          <Link
                             href="#"
                             className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Sign out
-                          </Lin>
+                            Sair
+                          </Link>
                         )} */}
                       </MenuItem>
 
