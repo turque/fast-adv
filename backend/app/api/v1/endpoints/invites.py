@@ -1,30 +1,32 @@
-import uuid
 from datetime import datetime
-from typing import Annotated
+from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app import crud, models, schemas
 from app.core.security import get_current_athlete
 from app.core.settings import settings
 from app.db.session import get_session
-from app.models import Athlete, Invite, Race, Team
-from app.schemas import InviteSchema
+from app.models.invite import Invite
 from app.utils.email import send_email
 
-CurrentAthlete = Annotated[Athlete, Depends(get_current_athlete)]
-
 router = APIRouter()
+Session = Annotated[Session, Depends(get_session)]
+CurrentAthlete = Annotated[models.Athlete, Depends(get_current_athlete)]
 
 
-@router.post('/create', status_code=201)
+@router.post('/create', response_model=schemas.Invite, status_code=201)
 def create_invite(
-    athlete: CurrentAthlete,
-    invite: InviteSchema,
-    db: Session = Depends(get_session),
-):
-    # TODO chage to CRUD format
+    db: Session,
+    current_athlete: CurrentAthlete,
+    invite_in: schemas.InviteCreate,
+) -> Any:
+
+    # valida se time existe
+    # valida se corrida existe
+
     team = db.scalar(
         select(Team).where(
             Team.id == invite.team_id, Team.owner_id == athlete.id
@@ -46,8 +48,6 @@ def create_invite(
         raise HTTPException(
             status_code=404, detail='Invalid or nonexistent race'
         )
-
-    token = uuid.uuid4()
 
     db_inviter = Invite(
         **invite.model_dump(mode='json'), token=str(token), athlete=athlete
