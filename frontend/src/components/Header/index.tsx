@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Disclosure, Menu, MenuButton, Transition, MenuItems, MenuItem, DisclosurePanel, DisclosureButton } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Fragment } from 'react';
-import ProfileImage from './ProfileImage';
+import ProfileImage from '../ProfileImage';
 
 const navigation = [
   { name: 'Prova', href: '#', current: true },
