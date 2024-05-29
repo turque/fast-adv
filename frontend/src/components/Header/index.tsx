@@ -68,8 +68,7 @@ export default function Header() {
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">Abra o menu de usuário</span>
                     
-                    < ProfileImage userId='1' />
-                    {/* <Image className='h-10 w-auto rounded-full' src="/img/perfil-roxo.png" width={50} height={50} alt="Imagem de perfil"/> */}
+                    <ProfileImage userId='2' />
                   </MenuButton>
 
                   <Transition
@@ -83,34 +82,28 @@ export default function Header() {
                   >
                     <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <MenuItem>
-                        {/* {({ focus }) => (
-                            <Link
-                              href="#"
-                              className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                            >
-                              Seu Perfil
-                            </Link>
-                        )} */}
+                        <Link
+                          href="#"
+                          className='bg-gray-100 block px-4 py-2 text-sm hover:bg-amber-600 hover:text-white active:bg-amber-700 focus:bg-amber-200'
+                        >
+                          Seu Perfil
+                        </Link>
                       </MenuItem>
                       <MenuItem>
-                        {/* {({ focus }) => (
-                          <Link
-                            href="#"
-                            className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Configurações
-                          </Link>
-                        )} */}
+                        <Link
+                          href="#"
+                          className='bg-gray-100 block px-4 py-2 text-sm hover:bg-amber-600 hover:text-white active:bg-amber-700 focus:bg-amber-200'
+                        >
+                          Configurações
+                        </Link>
                       </MenuItem>
                       <MenuItem>
-                        {/* {({ focus }) => (
-                          <Link
-                            href="#"
-                            className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Sair
-                          </Link>
-                        )} */}
+                        <Link
+                          href="#"
+                          className='bg-gray-100 block px-4 py-2 text-sm hover:bg-amber-600 hover:text-white active:bg-amber-700 focus:bg-amber-200'
+                        >
+                          Sair
+                        </Link>
                       </MenuItem>
 
                     </MenuItems>
