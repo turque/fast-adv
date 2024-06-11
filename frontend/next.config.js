@@ -38,8 +38,13 @@ const nextConfig = {
         port: '',
         pathname: '/img/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'nextui.org',
+        port: '',
+        pathname: '/images/**',
+      },
     ],
   },
 };
-
 module.exports = nextConfig;

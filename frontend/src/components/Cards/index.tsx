@@ -1,22 +1,30 @@
 import React from "react";
-import {Card, CardHeader, CardBody, Image} from "@nextui-org/react";
+import { Card, CardBody, CardFooter, CardHeader, Image } from "@nextui-org/react";
+import { RaceInterface } from "@/src/app/(authenticated)/users/models/race";
 
-export default function Cards() {
+
+export default function Cards(race: RaceInterface) {
   return (
-    <Card className="py-4">
-      <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-        <p className="text-tiny uppercase font-bold">Daily Mix</p>
-        <small className="text-default-500">12 Tracks</small>
-        <h4 className="font-bold text-large">Frontend Radio</h4>
+    <Card shadow="sm" isPressable>
+      <CardHeader>
+        <b>{race.name}</b>
       </CardHeader>
-      <CardBody className="overflow-visible py-2">
+      <CardBody className="overflow-visible p-0">
         <Image
-          alt="Card background"
-          className="object-cover rounded-xl"
-          src="https://nextui.org/images/hero-card-complete.jpeg"
-          width={270}
+          isZoomed
+          shadow="sm"
+          radius="lg"
+          // width="100%"
+          alt={race.name}
+          className="w-full object-cover h-[140px]"
+          src={race.image}
+          fallbackSrc="/img/compass.png"
         />
       </CardBody>
+      <CardFooter className="text-small justify-between">
+        <b className="text-default-500">{race.distance} km</b>
+        <p className="text-default-500">{race.race_date}</p>
+      </CardFooter>
     </Card>
   );
 }

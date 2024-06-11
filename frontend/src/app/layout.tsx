@@ -1,19 +1,12 @@
-import { Inter } from 'next/font/google'
 import { Providers } from './providers'
 
-const inter = Inter({ subsets: ['latin'] })
-
 export const metadata = {
-    title: 'Sistema Minha Aventura!',
-    description: 'Sistema de organização de time de corridad e aventura',
+    title: 'Minha Corrida de Aventura!',
+    description: 'Gestão de time e provas de corrida de aventura',
 }
 
 
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode
-}) {
+export default function RootLayout({children}: {children: React.ReactNode}) {
     return (
         <html lang="en" className='ligth'>
         <body>
