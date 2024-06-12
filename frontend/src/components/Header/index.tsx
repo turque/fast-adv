@@ -1,30 +1,38 @@
 // 'use client'
 
 import React from "react";
-import {Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar} from "@nextui-org/react";
+import Image from 'next/image'
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar } from "@nextui-org/react";
 
 
 export default function Header() {
   return (
     <Navbar>
       <NavbarBrand>
-        <p className="font-bold text-inherit">ACME</p>
+        <Image
+          src="/img/compass.svg"
+          className='h-9 w-auto rounded-full'
+          width={38}
+          height={38}
+          alt="Uma rosa dos ventos como logotipo do App"
+        />
+        {/* <p className="font-bold text-inherit">ACME</p> */}
       </NavbarBrand>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
-        </NavbarItem>
         <NavbarItem isActive>
-          <Link href="#" aria-current="page" color="secondary">
-            Customers
+          <Link color="foreground" href="#" aria-current="page">
+            Provas
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link href="#" color="foreground">
+            Equipes
           </Link>
         </NavbarItem>
         <NavbarItem>
           <Link color="foreground" href="#">
-            Integrations
+            Equipamentos
           </Link>
         </NavbarItem>
       </NavbarContent>
