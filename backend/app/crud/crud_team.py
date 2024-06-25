@@ -28,5 +28,12 @@ class CRUDTeam(CRUDBase[Team, TeamCreate, TeamUpdate]):
             .limit(limit)
         ).all()
 
+    def get_by_id_and_owner(
+        self, db: Session, *, team_id: int, athlete_id
+    ) -> Team:
+        return db.scalar(
+            select(Team).where(Team.id == team_id, Team.owner_id == athlete_id)
+        )
+
 
 team = CRUDTeam(Team)
