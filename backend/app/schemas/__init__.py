@@ -1,4 +1,4 @@
-from .athlete import AthleteDB, AthleteList, AthletePublic, AthleteSchema
+from .athlete import Athlete, AthleteCreate, AthleteUpdate
 from .invite import Invite, InviteCreate, InviteUpdate
 from .msg import Message
 from .race import Race, RaceCreate, RaceUpdate
@@ -17,10 +17,9 @@ __all__ = [
     'TeamUpdate',
     'Token',
     'TokenData',
-    'AthleteList',
-    'AthletePublic',
-    'AthleteSchema',
-    'AthleteDB',
+    'Athlete',
+    'AthleteCreate',
+    'AthleteUpdate',
     'Race',
     'RaceCreate',
     'RaceUpdate',

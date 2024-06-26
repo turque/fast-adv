@@ -1,6 +1,3 @@
-from app.schemas import AthletePublic
-
-
 def test_create_athlete(client, athlete, token):
     response = client.post(
         'api/v1/athletes/',
@@ -11,6 +8,8 @@ def test_create_athlete(client, athlete, token):
             'password': 'secret',
         },
     )
+    print(f'O e-mail do Athleta ({athlete.name}) criador é {athlete.email}')
+
     assert response.status_code == 201
     assert response.json() == {
         'name': 'alice',
@@ -31,16 +30,8 @@ def test_create_athlete_already_registered(client, athlete, token):
     )
     assert response.status_code == 400
     assert response.json() == {
-        'detail': 'Username already registered',
+        'detail': 'User already registered',
     }
-
-
-def test_read_athletes(client, athlete, token):
-    athlete_schema = AthletePublic.model_validate(athlete).model_dump()
-    response = client.get(
-        'api/v1/athletes/', headers={'Authorization': f'Bearer {token}'}
-    )
-    assert response.json() == {'athletes': [athlete_schema]}
 
 
 def test_update_athlete(client, athlete, token):
@@ -54,11 +45,7 @@ def test_update_athlete(client, athlete, token):
         },
     )
     assert response.status_code == 200
-    assert response.json() == {
-        'name': 'bob',
-        'email': 'bob@example.com',
-        'id': athlete.id,
-    }
+    assert response.json() == {'detail': 'Athlete updated'}
 
 
 def test_update_athlete_with_wrong_user(client, other_athlete, token):
@@ -92,7 +79,7 @@ def test_update_athlete_not_found(client):
 
 def test_delete_athlete(client, athlete, token):
     response = client.delete(
-        f'api/v1/athletes/{athlete.id}',
+        'api/v1/athletes/',
         headers={'Authorization': f'Bearer {token}'},
     )
 
@@ -101,16 +88,7 @@ def test_delete_athlete(client, athlete, token):
 
 
 def test_delete_athlete_not_found(client):
-    response = client.delete('api/v1/athletes/1')
+    response = client.delete('api/v1/athletes')
 
     assert response.status_code == 401
     assert response.json() == {'detail': 'Not authenticated'}
-
-
-def test_delete_athlete_wrong_user(client, other_athlete, token):
-    response = client.delete(
-        f'api/v1/athletes/{other_athlete.id}',
-        headers={'Authorization': f'Bearer {token}'},
-    )
-    assert response.status_code == 400
-    assert response.json() == {'detail': 'Not enough permissions'}

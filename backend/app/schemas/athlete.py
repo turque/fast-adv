@@ -1,22 +1,32 @@
-from pydantic import BaseModel, ConfigDict, EmailStr
+from typing import Optional
+
+from pydantic import BaseModel, EmailStr
 
 
-class AthleteSchema(BaseModel):
+class AthleteBase(BaseModel):
+    name: Optional[str]
+    email: Optional[EmailStr]
+
+
+class AthleteCreate(AthleteBase):
     name: str
-    email: EmailStr
-    password: str
+    password: Optional[str] = None
 
 
-class AthletePublic(BaseModel):
-    id: int
-    name: str
-    email: EmailStr
-    model_config = ConfigDict(from_attributes=True)
+class AthleteUpdate(AthleteBase):
+    password: Optional[str] = None
 
 
-class AthleteDB(AthleteSchema):
+class AthleteInDBBase(AthleteBase):
     id: int
 
+    class Config:
+        from_attributes = True
 
-class AthleteList(BaseModel):
-    athletes: list[AthletePublic]
+
+class Athlete(AthleteInDBBase):
+    pass
+
+
+class AthleteInDB(AthleteInDBBase):
+    pass
