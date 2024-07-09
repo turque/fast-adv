@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app import crud, models, schemas
-from app.core.security import get_current_athlete, get_password_hash
+from app.core.security import get_current_athlete
 from app.db.session import get_session
 
 router = APIRouter()
@@ -22,10 +22,10 @@ def create_athlete(
     Create new athlete.
     """
     athlete_in_db = crud.athlete.get_by_email(
-        db=db, athlete_email=current_athlete.email
+        db=db, athlete_email=athlete_in.email
     )
 
-    if athlete_in_db:
+    if athlete_in_db is None:
         raise HTTPException(status_code=400, detail='User already registered')
 
     athlete = crud.athlete.create(db=db, obj_in=athlete_in)

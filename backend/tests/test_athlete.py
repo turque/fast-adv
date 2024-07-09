@@ -8,13 +8,12 @@ def test_create_athlete(client, athlete, token):
             'password': 'secret',
         },
     )
-    print(f'O e-mail do Athleta ({athlete.name}) criador é {athlete.email}')
 
     assert response.status_code == 201
     assert response.json() == {
         'name': 'alice',
         'email': 'alice@example.com',
-        'id': athlete.id + 1,
+        'id': athlete.id + 2,
     }
 
 

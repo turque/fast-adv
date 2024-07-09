@@ -11,6 +11,9 @@ if TYPE_CHECKING:
 
 
 class Athlete(Base):
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+    
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
 
     name: Mapped[str] = mapped_column(nullable=False, index=True)

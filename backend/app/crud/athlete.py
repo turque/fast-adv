@@ -1,5 +1,3 @@
-from typing import Any, Dict
-
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -16,11 +14,7 @@ class CRUDAthlete(CRUDBase[Athlete, AthleteCreate, AthleteUpdate]):
         return super().create(db, obj_in=obj_in)
 
     def update(
-        self,
-        db: Session,
-        *,
-        db_obj: Athlete,
-        obj_in: AthleteUpdate
+        self, db: Session, *, db_obj: Athlete, obj_in: AthleteUpdate
     ) -> Athlete:
         if obj_in.password is not None:
             obj_in.password = get_password_hash(obj_in.password)
