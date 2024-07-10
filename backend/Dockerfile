@@ -22,7 +22,7 @@ EXPOSE 8000
 # ================================= DEVELOPMENT ================================
 FROM builder AS development
 
-CMD [ "poetry", "run", "uvicorn", "--host", "0.0.0.0", "app.main:app", "--reload" ]
+CMD [ "fastapi", "dev"]
 
 
 # ================================= PRODUCTION =================================
@@ -33,4 +33,4 @@ COPY . .
 RUN chmod +x ./scripts/pre-init.sh
 ENTRYPOINT [ "./scripts/pre-init.sh" ]
 
-CMD [ "poetry", "run", "uvicorn", "--host", "0.0.0.0", "app.main:app" ]
+CMD [ "fastapi", "run" ]
