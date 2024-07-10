@@ -13,7 +13,7 @@ def test_create_athlete(client, athlete, token):
     assert response.json() == {
         'name': 'alice',
         'email': 'alice@example.com',
-        'id': athlete.id + 2,
+        'id': athlete.id + 1,
     }
 
 

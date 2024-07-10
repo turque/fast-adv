@@ -21,12 +21,14 @@ class CRUDAthlete(CRUDBase[Athlete, AthleteCreate, AthleteUpdate]):
         return super().update(db, db_obj=db_obj, obj_in=obj_in)
 
     def get_by_id(self, db: Session, *, athlete_id: int) -> Athlete:
-        return db.scalars(select(Athlete).where(Athlete.id == athlete_id))
+        return db.scalars(
+            select(Athlete).where(Athlete.id == athlete_id).one_or_none()
+        )
 
     def get_by_email(self, db: Session, *, athlete_email: str) -> Athlete:
         return db.scalars(
             select(Athlete).where(Athlete.email == athlete_email)
-        )
+        ).one_or_none()
 
 
 athlete = CRUDAthlete(Athlete)

@@ -25,7 +25,7 @@ def create_athlete(
         db=db, athlete_email=athlete_in.email
     )
 
-    if athlete_in_db is None:
+    if athlete_in_db:
         raise HTTPException(status_code=400, detail='User already registered')
 
     athlete = crud.athlete.create(db=db, obj_in=athlete_in)
