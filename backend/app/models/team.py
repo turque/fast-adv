@@ -16,6 +16,6 @@ class Team(Base):
     team_members: Mapped[int] = mapped_column(nullable=False)
     logo: Mapped[str] = mapped_column(nullable=True)
     owner_id: Mapped[int] = mapped_column(ForeignKey('athlete.id'))
-
     race_id: Mapped[int] = mapped_column(ForeignKey('race.id'))
+
     athlete: Mapped['Athlete'] = relationship(back_populates='teams')

@@ -1,5 +1,5 @@
-from .athlete import AthleteDB, AthleteList, AthletePublic, AthleteSchema
-from .invite import InviteSchema
+from .athlete import Athlete, AthleteCreate, AthleteUpdate
+from .invite import Invite, InviteCreate, InviteUpdate
 from .msg import Message
 from .race import Race, RaceCreate, RaceUpdate
 from .strategic_planning import (
@@ -7,25 +7,26 @@ from .strategic_planning import (
     StrategicPlanningCreate,
     StrategicPlanningUpdate,
 )
-from .team import TeamList, TeamPublic, TeamSchema
+from .team import Team, TeamCreate, TeamUpdate
 from .token import Token, TokenData
 
 __all__ = [
-    'InviteSchema',
     'Message',
-    'TeamList',
-    'TeamPublic',
-    'TeamSchema',
+    'Team',
+    'TeamCreate',
+    'TeamUpdate',
     'Token',
     'TokenData',
-    'AthleteList',
-    'AthletePublic',
-    'AthleteSchema',
-    'AthleteDB',
+    'Athlete',
+    'AthleteCreate',
+    'AthleteUpdate',
     'Race',
     'RaceCreate',
     'RaceUpdate',
     'StrategicPlanning',
     'StrategicPlanningCreate',
     'StrategicPlanningUpdate',
+    'Invite',
+    'InviteCreate',
+    'InviteUpdate',
 ]

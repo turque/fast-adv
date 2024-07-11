@@ -28,8 +28,17 @@ class CRUDRace(CRUDBase[Race, RaceCreate, RaceUpdate]):
             .limit(limit)
         ).all()
 
-    def get_by_id(self, db: Session, *, race_id) -> Race:
+    def get_by_id(self, db: Session, *, race_id: int) -> Race:
         return db.scalars(select(Race).where(Race.id == race_id))
+
+    def get_by_id_and_onwer(
+        self, db: Session, *, race_id: int, athlete_id: int
+    ) -> Race:
+        return db.scalars(
+            select(Race).where(
+                Race.id == race_id, Race.athlete_id == athlete_id
+            )
+        )
 
 
 race = CRUDRace(Race)
