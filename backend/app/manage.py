@@ -30,13 +30,17 @@ def create_athlete(
 
     athlete_in = AthleteCreate(name=name, email=email)
     athlete_in.password = generate_password()
-    athlete = crud.athlete.create(db=db, obj_in=athlete_in)
 
     print(
-        f"""Create athlete [green]{athlete.name}[/green] \n
-        e-mail: [green]{athlete.email}[/green] \n
-        password: [red]{athlete_in.password}[/red]"""
+        f"""Creating...
+        Athlete: [green]{athlete_in.name}[/green]
+        E-mail: [green]{athlete_in.email}[/green]
+        Password: [red]{athlete_in.password}[/red]
+        [i dark_orange3]OBS: Salve essa senha[/i dark_orange3]"""
     )
+
+    if crud.athlete.create(db=db, obj_in=athlete_in):
+        print('[green]User created successfully[/green]')
 
 
 if __name__ == '__main__':
