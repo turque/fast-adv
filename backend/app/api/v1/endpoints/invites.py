@@ -1,45 +1,38 @@
-import uuid
-from datetime import datetime
-from typing import Annotated
+from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app import crud, models, schemas
 from app.core.security import get_current_athlete
-from app.core.settings import settings
 from app.db.session import get_session
-from app.models import Athlete, Invite, Race, Team
-from app.schemas import InviteSchema
-from app.utils.email import send_email
 
-CurrentAthlete = Annotated[Athlete, Depends(get_current_athlete)]
+# from app.utils.invite import send_invite
 
 router = APIRouter()
+Session = Annotated[Session, Depends(get_session)]
+CurrentAthlete = Annotated[models.Athlete, Depends(get_current_athlete)]
 
 
-@router.post('/create', status_code=201)
+@router.post('/create', response_model=schemas.Invite, status_code=201)
 def create_invite(
-    athlete: CurrentAthlete,
-    invite: InviteSchema,
-    db: Session = Depends(get_session),
-):
-    # TODO chage to CRUD format
-    team = db.scalar(
-        select(Team).where(
-            Team.id == invite.team_id, Team.owner_id == athlete.id
-        )
-    )
+    db: Session,
+    current_athlete: CurrentAthlete,
+    invite_in: schemas.InviteCreate,
+) -> Any:
 
+    # valida se o time está cadastrado
+    team = crud.team.get_by_id_and_owner(
+        db=db, team_id=invite_in.team_id, athlete_id=current_athlete.id
+    )
     if not team:
         raise HTTPException(
             status_code=404, detail='Invalid or nonexistent team'
         )
 
-    race = db.scalar(
-        select(Race).where(
-            Race.id == invite.race_id, Team.owner_id == athlete.id
-        )
+    # valida se a corrida está cadastrada
+    race = crud.race.get_by_id_and_onwer(
+        db=db, race_id=invite_in.race_id, athlete_id=current_athlete.id
     )
 
     if not race:
@@ -47,32 +40,18 @@ def create_invite(
             status_code=404, detail='Invalid or nonexistent race'
         )
 
-    token = uuid.uuid4()
-
-    db_inviter = Invite(
-        **invite.model_dump(mode='json'), token=str(token), athlete=athlete
+    invite = crud.invite.create(
+        db=db, invite_in=invite_in, athlete_id=current_athlete.id
     )
 
-    db.add(db_inviter)
-    db.commit()
-    db.refresh(db_inviter)
+    # send_invite(
+    #     db=db,
+    #     invite=invite,
+    #     sender=current_athlete.name,
+    #     race_name=race.name,
+    #     team_name=team.name,
+    # )
+
+    return invite
 
     # TODO cadastrar convidado como atleta do time
-
-    subject = f'Um convite especial de {athlete.name.capitalize}'
-
-    sent = send_email(
-        invite.email,
-        invite.name,
-        subject,
-        settings.TEMPLATE_INVITE,
-        receiver_name=invite.name,
-        sender=athlete.name.capitalize,
-        race=race.name,
-        url_to_invite=settings.SERVER_HOST,
-        token=db_inviter.token,
-        team=team.name.capitalize,
-    )
-    if sent:
-        db_inviter.sent_at = datetime.now()
-        db.commit()

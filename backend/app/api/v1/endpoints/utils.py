@@ -8,7 +8,7 @@ from app.core.security import get_current_athlete
 from app.db.session import get_session
 from app.models import Athlete
 from app.schemas import Message
-from app.utils.email import send_test_email
+from app.utils.email_test import send_test_email
 
 router = APIRouter()
 
