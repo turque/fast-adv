@@ -1,5 +1,5 @@
 import React from "react";
-import Cards from "@/src/components/Cards";
+import Cards from "@/components/Cards";
 
 export default function Home() {
   const races = [

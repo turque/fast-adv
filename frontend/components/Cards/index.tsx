@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardBody, CardFooter, CardHeader, Image } from "@nextui-org/react";
-import { RaceInterface } from "@/src/app/(authenticated)/users/models/race";
+import { RaceInterface } from "@/app/(authenticated)/users/models/race";
 
 
 export default function Cards(race: RaceInterface) {

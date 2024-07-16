@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { getUserById } from '@/src/app/(authenticated)/users/services/get-user-by-id';
+import { getUserById } from '@/app/(authenticated)/users/services/get-user-by-id';
 
 const imageStyle = {
   borderRadius: '50%',
